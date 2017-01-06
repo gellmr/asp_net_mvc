@@ -1,0 +1,33 @@
+﻿<div class="row">
+    <div class="col-xs-12">
+        <div class="centeredProducts">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        <h3>
+                            Available Products:
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12" id="product-search-div">
+                    <div class="input-group product-search-group">
+                        @* Search input *@
+                        @Html.TextBox("product-search-input", "", new { @class = "form-control product-search" })
+
+                        @* Search button *@
+                        <span class="input-group-btn">
+                            <a href="@Url.Action("store", "search", new { @searchString = "blah"})" class="btn btn-default product-search" name="product-search-button" type="button">
+                                <span class="glyphicon glyphicon-search"></span>Search
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

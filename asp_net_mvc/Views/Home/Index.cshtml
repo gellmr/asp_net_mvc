@@ -27,7 +27,12 @@
 <div class="row" style="margin-top:15px;">
     <div class="col-md-12">
         <div class="text-center">
-            @Html.ActionLink("Go to Store", "Store", "Index", new { @class = "btn btn-default go-next-btn" })
+            @Html.ActionLink("Go to Store",
+                "Index", // method
+                "Store", // controller
+                null,    // route arguments
+                new { @class = "btn btn-default go-next-btn" } // html arguments
+            )
         </div>
     </div>
 </div>
