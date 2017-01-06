@@ -1,0 +1,68 @@
+﻿@model asp_net_mvc.ViewModels.Store.ProductViewModel
+
+<div class="row">
+    <div class="col-xs-12">
+        @Html.DisplayFor(m => @Model.id)
+        @Html.DisplayFor(m => @Model.name)
+        @Html.DisplayFor(m => @Model.description)
+        @Html.DisplayFor(m => @Model.unitPrice)
+        @Html.DisplayFor(m => @Model.imageUrl)
+        @Html.DisplayFor(m => @Model.quantityInStock)
+
+        <div class="row well transparentBackground product-@Model.id">
+
+            <!-- Product name and description, Always visible. -->
+            <div class="col-xs-9 col-sm-4 dbug-always-visible">
+                <div class="row">
+                    <label>
+                        @Model.name
+                    </label>
+                </div>
+
+                <div class="row">
+                    <small>
+                        @Model.description
+                    </small>
+                </div>
+
+                <div class="row">
+                    <small class="greyText">
+                        @Model.quantityInStock in stock
+                    </small>
+                </div>
+
+                <div class="row">
+                    $ @Model.unitPrice <small class="greyText"> each </small>
+                </div>
+            </div>
+
+            <!-- X button, always visible -->
+            <div class="col-xs-1 col-sm-5 pull-right dbug-always-visible">
+                <div class="row pull-right">
+                    <%= render "partials/x_btn_remove_from_cart", {
+                    atStore: atStore,
+                    product: product,
+                    cssDisabled: !product_qty.blank? ? '' : 'disabled'
+                    } %>
+                </div>
+            </div>
+
+            <!-- Image tag, always visible -->
+            <div class="col-xs-12 col-sm-3 dbug-always-visible">
+                <%= image_tag "/images/120x120/#{product.image_url}", {
+                class: "img-rounded img-responsive centered-block-img with-vert-margins"
+                }%>
+            </div>
+
+            <%=
+            render "partials/input_qty_to_order_and_subtot", {
+            product: product,
+            product_qty: product_qty,
+            subtotal: subtotal,
+            atStore: atStore
+            }
+            %>
+        </div>
+
+    </div>
+</div>

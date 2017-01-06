@@ -1,4 +1,6 @@
-﻿<div class="row">
+﻿@model asp_net_mvc.ViewModels.Store.IndexViewModel
+
+<div class="row">
     <div class="col-xs-12">
         <div class="centeredProducts">
 
@@ -28,11 +30,10 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-sm-12 text-center">
-                    Products go here.
-                </div>
-            </div>
+            @foreach (var product in Model.products)
+            {
+                @Html.Partial("~/Views/Partials/Shopping/_ForSaleProductLine.cshtml", product)
+            }
 
             <div class="row">
                 <div class="col-md-12">
