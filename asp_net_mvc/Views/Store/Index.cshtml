@@ -16,14 +16,33 @@
                 <div class="col-sm-12" id="product-search-div">
                     <div class="input-group product-search-group">
                         @* Search input *@
-                        @Html.TextBox("product-search-input", "", new { @class = "form-control product-search" })
+                        @Html.TextBox("product-search-input", "", new { @class = "form-control product-search-control" })
 
                         @* Search button *@
                         <span class="input-group-btn">
-                            <a href="@Url.Action("store", "search", new { @searchString = "blah"})" class="btn btn-default product-search" name="product-search-button" type="button">
+                            <a href="@Url.Action("store", "search", new { @searchString = "blah"})" class="btn btn-default product-search-control" name="product-search-button" type="button">
                                 <span class="glyphicon glyphicon-search"></span>Search
                             </a>
                         </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    Products go here.
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        @Html.ActionLink("Go to Cart",
+                            "Index", // method
+                            "Cart",  // controller
+                            null,    // route arguments
+                            new { @class = "btn btn-default go-next-btn" } // html arguments
+                        )
                     </div>
                 </div>
             </div>
