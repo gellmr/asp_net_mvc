@@ -28,7 +28,7 @@ textarea {
 }
 
 div.product-search-group {
-  width: 210px;
+  max-width: 245px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -39,4 +39,15 @@ div.product-search-group {
 
 input.product-search-control {
   text-align: center;
+}
+
+.well.transparentBackground {
+  background-color: transparent;
+  /*
+  @media screen and (min-width: 768px) {
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+  }
+  */
 }

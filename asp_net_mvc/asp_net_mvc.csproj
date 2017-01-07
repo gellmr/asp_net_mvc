@@ -271,9 +271,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Store\Index.cshtml" />
     <Content Include="Views\Partials\Shopping\_ForSaleProductLine.cshtml" />
+    <Content Include="Views\Partials\Shopping\_InputQtyToOrderAndSubtot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\images\120x120\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
