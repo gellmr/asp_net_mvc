@@ -22,24 +22,41 @@
 
                         @* Search button *@
                         <span class="input-group-btn">
-                            <a href="@Url.Action("store", "search", new { @searchString = "blah"})" class="btn btn-default product-search-control" name="product-search-button" type="button">
-                                <span class="glyphicon glyphicon-search"></span>Search
+                            <a class="btn btn-default product-search-control" href="@Url.Action("store", "search", new { @searchString = "blah"})" name="product-search-button" type="button">
+                                <span class="glyphicon glyphicon-search"></span> 
+                                Search
                             </a>
                         </span>
                     </div>
                 </div>
             </div>
 
+            <!-- Pagination TOP -->
             <div class="row">
-                <div class="col-xs-12 text-center">
-                    Page: @Model.CurrentPage of @Model.MaxPage
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        Page: @Model.CurrentPage of @Model.MaxPage
+                    </div>
                 </div>
             </div>
+            <hr class="narrow-hr" />
 
-            @foreach (var product in Model.Order.Products)
-            {
-                @Html.Partial("~/Views/Partials/Shopping/_ForSaleProductLine.cshtml", @product)
-            }
+            <!-- TODO: use an actual MVC5 form. -->
+            <form role="form">
+                @foreach (var product in Model.Order.Products)
+                {
+                    @Html.Partial("~/Views/Partials/Shopping/_ForSaleProductLine.cshtml", @product)
+                }
+            </form>
+
+            <!-- Pagination BOTTOM -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        Page: @Model.CurrentPage of @Model.MaxPage
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12">

@@ -16,7 +16,7 @@
                 <div class="input-group" style="margin-right:5px;">
 
                     @Html.TextBox(
-                        "qtyToOrder-productId-" + @Model.Product.Id.ToString(),
+                        "qtyToOrder-input",
                         Model.QuantityToOrder,
                         new
                         {
@@ -26,11 +26,10 @@
                     )
 
                     <span class="input-group-btn">
-                        <button type="button" name="qty-btn-minus" class="btn btn-default qty-btn qty-btn-minus" id="qty-btn-minus-@Model.Product.Id">
+                        <button class="btn btn-default qty-btn qty-btn-minus" id="qty-btn-minus-@Model.Product.Id" name="qty-btn-minus" type="button">
                             <span class="glyphicon glyphicon-minus"></span>
                         </button>
-
-                        <button type="button" name="qty-btn-plus" class="btn btn-default qty-btn qty-btn-plus" id="qty-btn-plus-@Model.Product.Id">
+                        <button class="btn btn-default qty-btn qty-btn-plus" id="qty-btn-plus-@Model.Product.Id" name="qty-btn-plus" type="button">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </span>
@@ -59,7 +58,7 @@
         }
         <div class="col-xs-4 inCartIcon" style="@icon_style">
             <div class="row">
-                <img alt="(Added to cart)" src="@ImagesPath/images/inCart60x60.png" class="img-rounded centered-block-img" />
+                <img alt="(Added to cart)" class="img-rounded centered-block-img" src="@ImagesPath/images/inCart60x60.png"/>
             </div>
         </div>
     </div>

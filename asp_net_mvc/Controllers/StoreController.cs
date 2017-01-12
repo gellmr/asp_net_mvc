@@ -35,6 +35,36 @@ namespace asp_net_mvc.Controllers
             });
             model.Order.Products.Add(new OrderedProductViewModel
             {
+                Product = new ProductViewModel
+                {
+                    Id = 2,
+                    Name = "270pF 50Volt Ceramic Capacitor",
+                    Description = "Lead Spacing: 5mm (Pack of 2)",
+                    UnitPrice = 0.32M,
+                    ImageUrl = string.Format("{0}/images/120x120/270pF_50_VoltCeramicCapacitor.jpg", ImagesPath),
+                    QuantityInStock = 200
+                },
+                QuantityToOrder = 0,
+                SubTotal = 0
+            });
+            model.Order.Products.Add(new OrderedProductViewModel
+            {
+                Product = new ProductViewModel
+                {
+                    Id = 3,
+                    Name = "500 Ohm 24mm Potentiometer",
+                    Description = "Full size - 24mm diameter. Power rating is 0.5W maximum.",
+                    UnitPrice = 2.25M,
+                    ImageUrl = string.Format("{0}/images/120x120/pot.png", ImagesPath),
+                    QuantityInStock = 230
+                },
+                QuantityToOrder = 0,
+                SubTotal = 0
+            });
+
+            /*
+            model.Order.Products.Add(new OrderedProductViewModel
+            {
                 Product = new ProductViewModel {
                     Id = 24,
                     Name = "Metal Gear Motor",
@@ -87,7 +117,7 @@ namespace asp_net_mvc.Controllers
                 },
                 QuantityToOrder = 0,
                 SubTotal = 0
-            });
+            });*/
             return View(model);
         }
     }
