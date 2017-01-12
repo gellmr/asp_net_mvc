@@ -1,4 +1,4 @@
-﻿@model asp_net_mvc.ViewModels.Store.IndexViewModel
+﻿@model asp_net_mvc.Models.ShoppingViewModels.StoreViewModel
 
 <div class="row">
     <div class="col-xs-12">
@@ -30,9 +30,15 @@
                 </div>
             </div>
 
-            @foreach (var product in Model.products)
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    Page: @Model.CurrentPage of @Model.MaxPage
+                </div>
+            </div>
+
+            @foreach (var product in Model.Order.Products)
             {
-                @Html.Partial("~/Views/Partials/Shopping/_ForSaleProductLine.cshtml", product)
+                @Html.Partial("~/Views/Partials/Shopping/_ForSaleProductLine.cshtml", @product)
             }
 
             <div class="row">
