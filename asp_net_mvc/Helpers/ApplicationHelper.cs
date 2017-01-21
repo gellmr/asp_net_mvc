@@ -8,8 +8,8 @@ namespace asp_net_mvc.Helpers
 {
     public static class ApplicationHelper
     {
-        public static string ImagesPath(){
-            return ConfigurationManager.AppSettings["localImagesFilePath"].ToString();
+        public static string SiteImagesFolderPath(){
+            return ConfigurationManager.AppSettings["siteImagesFolderPath"].ToString();
         }
     }
 }

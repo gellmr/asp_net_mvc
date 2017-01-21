@@ -8,24 +8,24 @@ namespace asp_net_mvc
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            bundles.Add(new StyleBundle("~/css_bundles/css").Include(
+                      "~/dist/site.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/js_bundles/jquery").Include(
+                        "~/dist/jquery/jquery.js"));
+                        
+            bundles.Add(new ScriptBundle("~/js_bundles/bootstrap-sass").Include(
+                        "~/dist/bootstrap-sass/bootstrap.js"));
 
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+            // validation is not used on every page, so its bundled separately to reduce page load time.
+            bundles.Add(new ScriptBundle("~/js_bundles/jquery.validate").Include(
+                        "~/dist/jquery.validation/jquery.validate.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/js_bundles/Microsoft.jQuery.Unobtrusive.Validation").Include(
+                        "~/dist/Microsoft.jQuery.Unobtrusive.Validation/jquery.validate.unobtrusive.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+            // allow debug mode to serve minified files.
+            //BundleTable.EnableOptimizations = true;
         }
     }
 }

@@ -49,7 +49,7 @@
 
         @* IN-CART ICON *@
         @{
-            var ImagesPath = asp_net_mvc.Helpers.ApplicationHelper.ImagesPath();
+            var SiteImages = asp_net_mvc.Helpers.ApplicationHelper.SiteImagesFolderPath();
             var icon_style = "display: block;";
             if (Model.QuantityToOrder < 1)
             {
@@ -58,7 +58,7 @@
         }
         <div class="col-xs-4 inCartIcon" style="@icon_style">
             <div class="row">
-                <img alt="(Added to cart)" class="img-rounded centered-block-img" src="@ImagesPath/images/inCart60x60.png"/>
+                <img alt="(Added to cart)" class="img-rounded centered-block-img" src="@SiteImages/inCart60x60.png"/>
             </div>
         </div>
     </div>
