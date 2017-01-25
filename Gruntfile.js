@@ -102,6 +102,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Establish tasks we can run from the terminal.
-    grunt.registerTask('build', ['clean', 'copy', 'sass']);
-    grunt.registerTask('default', ['clean', 'build', 'watch']);
+    grunt.registerTask('default', ['clean', 'copy', 'sass']);
+    //grunt.registerTask('build', ['clean', 'copy', 'sass']);
+    //grunt.registerTask('default', ['clean', 'build', 'watch']);
 }
