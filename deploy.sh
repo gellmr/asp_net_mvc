@@ -119,7 +119,7 @@ echo "MSBUILD the .NET files..."
 # Restore NuGet packages
 if [ -f "asp_net_mvc.sln" ]; then
   eval nuget restore "$DEPLOYMENT_SOURCE\asp_net_mvc.sln"
-)
+fi
 
 # Build to the temporary path
 eval "$MSBUILD_PATH" "$DEPLOYMENT_SOURCE\asp_net_mvc\asp_net_mvc.csproj" /nologo /verbosity:m /t:Build /p:AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="$DEPLOYMENT_SOURCE\.\\" $SCM_BUILD_ARGS
