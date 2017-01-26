@@ -83,22 +83,22 @@ module.exports = function (grunt) {
         },
 
         // Watch these files and notify of changes.
-        watch: {
-            grunt: { files: ['Gruntfile.js'] },
-
-            sass: {
-                files: [
-                    'asp_net_mvc/scss/**/*.scss'
-                ],
-                tasks: ['sass']
-            }
-        }
+        //watch: {
+        //    grunt: { files: ['Gruntfile.js'] },
+        //
+        //    sass: {
+        //        files: [
+        //            'asp_net_mvc/scss/**/*.scss'
+        //        ],
+        //        tasks: ['sass']
+        //    }
+        //}
     });
 
     // Load externally defined tasks. 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-sass'); // maybe should be using grunt-contrib-sass
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    //grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Establish tasks we can run from the terminal.

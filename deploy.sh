@@ -113,7 +113,7 @@ selectNodeVersion
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
   eval $NPM_CMD prune
-  echo "\nDo npm install --production"
+  echo "Do npm install --production"
   eval $NPM_CMD install --production
   exitWithMessageOnError "npm install failed"
   cd - > /dev/null
@@ -134,12 +134,13 @@ fi
 # 5. Run Grunt Task
 if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval ./node_modules/.bin/grunt
+  eval ./node_modules/.bin/grunt --verbose
   exitWithMessageOnError "Grunt failed"
   cd - > /dev/null
 fi
 
 ls -la
-ls -la asp_net_mvc/dist/
+ls -la asp_net_mvc/dist/fonts/bootstrap
+ls -la asp_net_mvc/dist/**
 
 echo "Finished successfully."
