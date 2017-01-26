@@ -112,11 +112,10 @@ selectNodeVersion
 # 3. Install NPM packages
 if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd "$DEPLOYMENT_TARGET"
-  pwd
-  ls -la
-  echo "do npm install --production"
+  eval $NPM_CMD prune
+  echo "\nDo npm install --production"
   eval $NPM_CMD install --production
-  exitWithMessageOnError "npm failed"
+  exitWithMessageOnError "npm install failed"
   cd - > /dev/null
 fi
 
@@ -139,5 +138,8 @@ if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
   exitWithMessageOnError "Grunt failed"
   cd - > /dev/null
 fi
+
+ls -la
+ls -la asp_net_mvc/dist/
 
 echo "Finished successfully."
