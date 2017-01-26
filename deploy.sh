@@ -140,6 +140,7 @@ if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
 fi
 
 # 6. List the installed files for View Log
+echo "List the installed files..."
 cd "$DEPLOYMENT_TARGET"
 ls -la
 ls -la asp_net_mvc/dist/fonts/bootstrap
