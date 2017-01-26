@@ -64,6 +64,22 @@ if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
   fi
 fi
 
+if [[ ! -n "$DEPLOYMENT_TEMP" ]]; then
+  DEPLOYMENT_TEMP=$temp\___deployTemp$random
+  CLEAN_LOCAL_DEPLOYMENT_TEMP=true
+fi
+
+if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
+  if [ -d "$DEPLOYMENT_TEMP" ]; then
+    rm -rf "$DEPLOYMENT_TEMP"
+  fi
+  mkdir "$DEPLOYMENT_TEMP"
+fi
+
+if [[ ! -n "$MSBUILD_PATH" ]]; then
+  MSBUILD_PATH="ProgramFiles(x86)\MSBuild\14.0\Bin\MSBuild.exe"
+fi
+
 # Node Helpers
 # ------------
 
@@ -97,6 +113,18 @@ selectNodeVersion () {
 ##################################################################################################################################
 # Deployment
 # ----------
+
+echo "MSBUILD the .NET files..."
+
+# Restore NuGet packages
+if [ -f "asp_net_mvc.sln" ]; then
+  eval nuget restore "$DEPLOYMENT_SOURCE\asp_net_mvc.sln"
+)
+
+# Build to the temporary path
+eval "$MSBUILD_PATH" "$DEPLOYMENT_SOURCE\asp_net_mvc\asp_net_mvc.csproj" /nologo /verbosity:m /t:Build /p:AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="$DEPLOYMENT_SOURCE\.\\" $SCM_BUILD_ARGS
+
+
 
 echo "Custom deployment script..."
 
@@ -134,7 +162,7 @@ fi
 # 5. Run Grunt Task
 if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
   cd "$DEPLOYMENT_TARGET"
-  eval ./node_modules/.bin/grunt --verbose
+  eval ./node_modules/.bin/grunt --no-color --verbose
   exitWithMessageOnError "Grunt failed"
   cd - > /dev/null
 fi
