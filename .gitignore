@@ -210,6 +210,9 @@ gellmvc/dist/
 # (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
 bower_components/
 
+# Kudusync temporary folder
+___deployTemp*
+
 # RIA/Silverlight projects
 Generated_Code/
 

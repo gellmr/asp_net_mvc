@@ -26,6 +26,13 @@ exitWithMessageOnError "Missing node.js executable, please install node.js, if a
 # Setup
 # -----
 
+# see https://github.com/projectkudu/kudu/wiki/Deployment-hooks
+# pwd is initially the root of the repo when batch file is executing.
+# DEPLOYMENT_SOURCE == the root of the repo
+# DEPLOYMENT_TARGET == the wwwroot folder
+# DEPLOYMENT_TEMP   == temporary folder for storing artifacts for the current build. Deleted after cmd is run.
+# MSBUILD_PATH      == Path to msbuild executable
+
 #SCRIPT_DIR="${BASH_SOURCE[0]%\\*}"
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "SCRIPT_DIR: $SCRIPT_DIR"
@@ -55,17 +62,17 @@ else
   KUDU_SERVICE=true
 fi
 
-#if [[ ! -n "$DEPLOYMENT_TEMP" ]]; then
-#  DEPLOYMENT_TEMP=$temp\___deployTemp$random
-#  CLEAN_LOCAL_DEPLOYMENT_TEMP=true
-#fi
-#
-#if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
-#  if [ -d "$DEPLOYMENT_TEMP" ]; then
-#    rm -rf "$DEPLOYMENT_TEMP"
-#  fi
-#  mkdir "$DEPLOYMENT_TEMP"
-#fi
+if [[ ! -n "$DEPLOYMENT_TEMP" ]]; then
+  DEPLOYMENT_TEMP=$temp\___deployTemp$random
+  CLEAN_LOCAL_DEPLOYMENT_TEMP=true
+fi
+
+if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
+  if [ -d "$DEPLOYMENT_TEMP" ]; then
+    rm -rf "$DEPLOYMENT_TEMP"
+  fi
+  mkdir "$DEPLOYMENT_TEMP"
+fi
 
 echo "MSBUILD_PATH already defined on azure? $MSBUILD_PATH"
 if [[ ! -n "$MSBUILD_PATH" ]]; then
@@ -148,7 +155,13 @@ echo "pwd: $(pwd)"
 printf "\n"
 
 # Tell MSBuild to build our solution.
-"$MSBUILD_PATH" "gellmvc.sln"
+
+# compiles to /gellmvc/gellmvc/bin
+#"$MSBUILD_PATH" "gellmvc.sln"
+
+# compiles to /gellmvc/___deployTemp
+"$MSBUILD_PATH" "gellmvc.sln" "/property:OutputPath=../$DEPLOYMENT_TEMP"
+
 printf "\n"
 popd
 echo "pwd: $(pwd)"
