@@ -1,0 +1,52 @@
+﻿@model gellmvc.Models.ShoppingViewModels.OrderedProductViewModel
+
+@*
+@Html.DisplayFor(m => @Model.id)
+@Html.DisplayFor(m => @Model.name)
+@Html.DisplayFor(m => @Model.description)
+@Html.DisplayFor(m => @Model.unitPrice)
+@Html.DisplayFor(m => @Model.imageUrl)
+@Html.DisplayFor(m => @Model.quantityInStock)
+*@
+<div class="row well transparentBackground product-@Model.Product.Id">
+
+    <!-- Product name and description, Always visible. -->
+    <div class="col-xs-9 col-sm-4 dbug-always-visible">
+        <div class="row">
+            <label>
+                @Model.Product.Name
+            </label>
+        </div>
+
+        <div class="row">
+            <small>
+                @Model.Product.Description
+            </small>
+        </div>
+
+        <div class="row">
+            <small class="greyText">
+                @Model.Product.QuantityInStock in stock
+            </small>
+        </div>
+
+        <div class="row">
+            $ @Model.Product.UnitPrice <small class="greyText"> each </small>
+        </div>
+    </div>
+
+    <!-- X button, always visible -->
+    <div class="col-xs-1 col-sm-5 pull-right dbug-always-visible">
+        <div class="row pull-right">
+            @Html.Partial("~/Views/Partials/Shopping/_x_btn_remove_from_cart.cshtml")
+        </div>
+    </div>
+
+    <!-- Image tag, always visible -->
+    <div class="col-xs-12 col-sm-3 dbug-always-visible">                
+        <img alt="@Model.Product.ImageUrl" class="img-rounded img-responsive centered-block-img with-vert-margins" src="@Model.Product.ImageUrl"/>
+    </div>
+
+    @Html.Partial("~/Views/Partials/Shopping/Cart/_InputQtyToOrder.cshtml", @Model)
+
+</div>
