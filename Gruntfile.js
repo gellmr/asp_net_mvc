@@ -4,7 +4,7 @@ module.exports = function (grunt) {
         
         clean: {
           // delete everything in dist
-          dist: ['asp_net_mvc/dist/*']
+          dist: ['gellmvc/dist/*']
         },
 
         // Compile SASS files into minified CSS.
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                 },
                 // the file that i want to compile. eg, 'dist/compiled.css' : 'scss/source.scss'
                 files: {
-                    'asp_net_mvc/dist/site.css': 'asp_net_mvc/scss/site.scss'
+                    'gellmvc/dist/site.css': 'gellmvc/scss/site.scss'
                 }
             }
         },
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/bootstrap-sass/assets/javascripts/',
                         src: ['**/*.js'],
-                        dest: 'asp_net_mvc/dist/bootstrap-sass/'
+                        dest: 'gellmvc/dist/bootstrap-sass/'
                     },
 
                     //jquery
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/jquery/dist/',
                         src: ['**/*.js', '**/*.map'],
-                        dest: 'asp_net_mvc/dist/jquery/'
+                        dest: 'gellmvc/dist/jquery/'
                     },
 
                     //jquery.validation
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/jquery.validation/dist/',
                         src: ['**/*.js'],
-                        dest: 'asp_net_mvc/dist/jquery.validation/'
+                        dest: 'gellmvc/dist/jquery.validation/'
                     },
 
                     // Microsoft.jQuery.Unobtrusive.Validation
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/Microsoft.jQuery.Unobtrusive.Validation/',
                         src: ['**/*.js'],
-                        dest: 'asp_net_mvc/dist/Microsoft.jQuery.Unobtrusive.Validation/'
+                        dest: 'gellmvc/dist/Microsoft.jQuery.Unobtrusive.Validation/'
                     },
 
                     // Fonts.
@@ -69,14 +69,14 @@ module.exports = function (grunt) {
                         flatten: true,
                         cwd: 'bower_components/',
                         src: ['bootstrap-sass/assets/fonts/**'],
-                        dest: 'asp_net_mvc/dist/fonts/bootstrap/'
+                        dest: 'gellmvc/dist/fonts/bootstrap/'
                     },
 
                     // site images.
                     {
                         expand: true,
                         src: ['site_images/**'],
-                        dest: 'asp_net_mvc/dist/'
+                        dest: 'gellmvc/dist/'
                     },
                 ]
             },
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
         //
         //    sass: {
         //        files: [
-        //            'asp_net_mvc/scss/**/*.scss'
+        //            'gellmvc/scss/**/*.scss'
         //        ],
         //        tasks: ['sass']
         //    }

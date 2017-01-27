@@ -26,8 +26,13 @@ exitWithMessageOnError "Missing node.js executable, please install node.js, if a
 # Setup
 # -----
 
-SCRIPT_DIR="${BASH_SOURCE[0]%\\*}"
-SCRIPT_DIR="${SCRIPT_DIR%/*}"
+#SCRIPT_DIR="${BASH_SOURCE[0]%\\*}"
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "SCRIPT_DIR: $SCRIPT_DIR"
+
+#SCRIPT_DIR="${SCRIPT_DIR%/*}"
+#echo "SCRIPT_DIR: $SCRIPT_DIR"
+
 ARTIFACTS=$SCRIPT_DIR/../artifacts
 KUDU_SYNC_CMD=${KUDU_SYNC_CMD//\"}
 
@@ -49,21 +54,6 @@ else
   KUDU_SERVICE=true
 fi
 
-if [[ ! -n "$KUDU_SYNC_CMD" ]]; then
-  # Install kudu sync
-  echo Installing Kudu Sync
-  npm install kudusync -g --silent
-  exitWithMessageOnError "npm failed"
-
-  if [[ ! -n "$KUDU_SERVICE" ]]; then
-    # In case we are running locally this is the correct location of kuduSync
-    KUDU_SYNC_CMD=kuduSync
-  else
-    # In case we are running on kudu service this is the correct location of kuduSync
-    KUDU_SYNC_CMD=$APPDATA/npm/node_modules/kuduSync/bin/kuduSync
-  fi
-fi
-
 if [[ ! -n "$DEPLOYMENT_TEMP" ]]; then
   DEPLOYMENT_TEMP=$temp\___deployTemp$random
   CLEAN_LOCAL_DEPLOYMENT_TEMP=true
@@ -76,8 +66,13 @@ if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
   mkdir "$DEPLOYMENT_TEMP"
 fi
 
+echo "MSBUILD_PATH already defined on azure? $MSBUILD_PATH"
 if [[ ! -n "$MSBUILD_PATH" ]]; then
-  MSBUILD_PATH="ProgramFiles(x86)\MSBuild\14.0\Bin\MSBuild.exe"
+  # location on deploy.cmd...
+  #MSBUILD_PATH="ProgramFiles(x86)\MSBuild\14.0\Bin\MSBuild.exe"
+  
+  # location on my machine...
+  MSBUILD_PATH="/c/Program Files/MSBuild/14.0/Bin/MSBuild.exe"
 fi
 
 # Node Helpers
@@ -114,18 +109,47 @@ selectNodeVersion () {
 # Deployment
 # ----------
 
+printf "\n"
 echo "MSBUILD the .NET files..."
 
 # Restore NuGet packages
-if [ -f "asp_net_mvc.sln" ]; then
-  eval nuget restore "$DEPLOYMENT_SOURCE\asp_net_mvc.sln"
+if [ -f "gellmvc.sln" ]; then
+  echo "DEPLOYMENT_SOURCE: $DEPLOYMENT_SOURCE"
+  echo "pwd:               $(pwd)"
+  nuget restore "$DEPLOYMENT_SOURCE"/gellmvc.sln
+fi
+
+printf "\n"
+echo "MSBUILD_PATH:      $MSBUILD_PATH"
+echo "DEPLOYMENT_SOURCE: $DEPLOYMENT_SOURCE"
+if [ -f "$DEPLOYMENT_SOURCE/gellmvc/gellmvc.csproj" ]; then
+  echo "Found the csproj"
+fi
+if [ -f "$MSBUILD_PATH" ]; then
+  echo "Found MSBuild.exe"
+fi
+if [ -d "$DEPLOYMENT_SOURCE\.\\" ]; then
+  echo "Deployment folder exists1"
+fi
+if [ -d "$DEPLOYMENT_SOURCE" ]; then
+  echo "Deployment folder exists2"
 fi
 
 # Build to the temporary path
-"$MSBUILD_PATH $DEPLOYMENT_SOURCE\asp_net_mvc\asp_net_mvc.csproj" /nologo /verbosity:m /t:Build /p:AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false /p:SolutionDir="$DEPLOYMENT_SOURCE\.\\" $SCM_BUILD_ARGS
+printf "\n"
+echo "Build to the temporary path..."
 
+printf "\n"
+printf "\n"
 
+pushd /c/examples_of_my_work/gellmvc
 
+# MSBuild.exe [Switches] [ProjectFile]
+"$MSBUILD_PATH" "/target:Build /property:OutputPath=bin;AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false; gellmvc.sln"
+
+popd
+
+printf "\n"
 echo "Custom deployment script..."
 
 # 1. KuduSync
@@ -171,8 +195,8 @@ fi
 echo "List the installed files..."
 cd "$DEPLOYMENT_TARGET"
 ls -la
-ls -la asp_net_mvc/dist/fonts/bootstrap
-ls -la asp_net_mvc/dist/**
+ls -la gellmvc/dist/fonts/bootstrap
+ls -la gellmvc/dist/**
 cd - > /dev/null
 
 echo "Finished successfully."
