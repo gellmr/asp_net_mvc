@@ -34,7 +34,8 @@ echo "SCRIPT_DIR: $SCRIPT_DIR"
 #echo "SCRIPT_DIR: $SCRIPT_DIR"
 
 ARTIFACTS=$SCRIPT_DIR/../artifacts
-KUDU_SYNC_CMD=${KUDU_SYNC_CMD//\"}
+#KUDU_SYNC_CMD=${KUDU_SYNC_CMD//\"}
+KUDU_SYNC_CMD="kudusync"
 
 if [[ ! -n "$DEPLOYMENT_SOURCE" ]]; then
   DEPLOYMENT_SOURCE=$SCRIPT_DIR
@@ -54,17 +55,17 @@ else
   KUDU_SERVICE=true
 fi
 
-if [[ ! -n "$DEPLOYMENT_TEMP" ]]; then
-  DEPLOYMENT_TEMP=$temp\___deployTemp$random
-  CLEAN_LOCAL_DEPLOYMENT_TEMP=true
-fi
-
-if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
-  if [ -d "$DEPLOYMENT_TEMP" ]; then
-    rm -rf "$DEPLOYMENT_TEMP"
-  fi
-  mkdir "$DEPLOYMENT_TEMP"
-fi
+#if [[ ! -n "$DEPLOYMENT_TEMP" ]]; then
+#  DEPLOYMENT_TEMP=$temp\___deployTemp$random
+#  CLEAN_LOCAL_DEPLOYMENT_TEMP=true
+#fi
+#
+#if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
+#  if [ -d "$DEPLOYMENT_TEMP" ]; then
+#    rm -rf "$DEPLOYMENT_TEMP"
+#  fi
+#  mkdir "$DEPLOYMENT_TEMP"
+#fi
 
 echo "MSBUILD_PATH already defined on azure? $MSBUILD_PATH"
 if [[ ! -n "$MSBUILD_PATH" ]]; then
@@ -129,34 +130,52 @@ if [ -f "$MSBUILD_PATH" ]; then
   echo "Found MSBuild.exe"
 fi
 if [ -d "$DEPLOYMENT_SOURCE\.\\" ]; then
-  echo "Deployment folder exists1"
+  echo "Deployment folder $DEPLOYMENT_SOURCE/.// exists1"
 fi
 if [ -d "$DEPLOYMENT_SOURCE" ]; then
-  echo "Deployment folder exists2"
+  echo "Deployment folder $DEPLOYMENT_SOURCE exists2"
 fi
 
-# Build to the temporary path
+
+
+# Build to the temporary 
+printf "\n"
 printf "\n"
 echo "Build to the temporary path..."
 
-printf "\n"
-printf "\n"
-
 pushd /c/examples_of_my_work/gellmvc
-
-# MSBuild.exe [Switches] [ProjectFile]
-"$MSBUILD_PATH" "/target:Build /property:OutputPath=bin;AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false; gellmvc.sln"
-
-popd
-
+echo "pwd: $(pwd)"
 printf "\n"
-echo "Custom deployment script..."
+
+# Tell MSBuild to build our solution.
+"$MSBUILD_PATH" "gellmvc.sln"
+printf "\n"
+popd
+echo "pwd: $(pwd)"
+
+
+
+
+# Custom deployment script
+printf "\n"
+echo "Custom deployment script... DEPLOYMENT_SOURCE == $DEPLOYMENT_SOURCE"
+echo "KUDU_SYNC_CMD == $KUDU_SYNC_CMD"
+
+pushd /c/examples_of_my_work/gellmvc/gellmvc
+echo "pwd: $(pwd)"
+printf "\n"
 
 # 1. KuduSync
 if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
-  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
+  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE/gellmvc/bin" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
   exitWithMessageOnError "Kudu Sync failed"
 fi
+printf "\n"
+popd
+echo "pwd: $(pwd)"
+
+
+
 
 # 2. Select node version
 selectNodeVersion
