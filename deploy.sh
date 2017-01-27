@@ -8,6 +8,10 @@
 # Helpers
 # -------
 
+pause() {
+   read -p "$*"
+}
+
 exitWithMessageOnError () {
   if [ ! $? -eq 0 ]; then
     echo "An error has occurred during web site deployment."
@@ -117,41 +121,34 @@ selectNodeVersion () {
 # Deployment
 # ----------
 
-printf "\n"
-echo "MSBUILD the .NET files..."
-
 # Restore NuGet packages
-if [ -f "gellmvc.sln" ]; then
-  echo "DEPLOYMENT_SOURCE: $DEPLOYMENT_SOURCE"
-  echo "pwd:               $(pwd)"
+if [ ! -f "$DEPLOYMENT_SOURCE"/gellmvc.sln ]; then
+  echo "Could not find the solution file."
+else
   nuget restore "$DEPLOYMENT_SOURCE"/gellmvc.sln
 fi
 
 printf "\n"
-echo "MSBUILD_PATH:      $MSBUILD_PATH"
-echo "DEPLOYMENT_SOURCE: $DEPLOYMENT_SOURCE"
-if [ -f "$DEPLOYMENT_SOURCE/gellmvc/gellmvc.csproj" ]; then
-  echo "Found the csproj"
+
+if [ ! -f "$DEPLOYMENT_SOURCE/gellmvc/gellmvc.csproj" ]; then
+  echo "Could not find the csproj"
+else
+  echo "Found csproj: $DEPLOYMENT_SOURCE/gellmvc/gellmvc.csproj"
 fi
-if [ -f "$MSBUILD_PATH" ]; then
-  echo "Found MSBuild.exe"
-fi
-if [ -d "$DEPLOYMENT_SOURCE\.\\" ]; then
-  echo "Deployment folder $DEPLOYMENT_SOURCE/.// exists1"
-fi
-if [ -d "$DEPLOYMENT_SOURCE" ]; then
-  echo "Deployment folder $DEPLOYMENT_SOURCE exists2"
+
+if [ ! -f "$MSBUILD_PATH" ]; then
+  echo "Could not find MSBuild.exe"
+else
+  echo "MSBUILD_PATH: $MSBUILD_PATH"
 fi
 
 
 
-# Build to the temporary 
+# Build to the temporary path
 printf "\n"
-printf "\n"
-echo "Build to the temporary path..."
-
 pushd /c/examples_of_my_work/gellmvc
-echo "pwd: $(pwd)"
+printf "\n"
+echo "Do MSBuild..."
 printf "\n"
 
 # Tell MSBuild to build our solution.
@@ -162,40 +159,23 @@ printf "\n"
 # compiles to /gellmvc/___deployTemp
 "$MSBUILD_PATH" "gellmvc.sln" "/property:OutputPath=../$DEPLOYMENT_TEMP"
 
+echo "Compiled solution into ___deployTemp"
+
+
 printf "\n"
 popd
-echo "pwd: $(pwd)"
-
-
-
-
-# Custom deployment script
-printf "\n"
-echo "Custom deployment script... DEPLOYMENT_SOURCE == $DEPLOYMENT_SOURCE"
-echo "KUDU_SYNC_CMD == $KUDU_SYNC_CMD"
-
-pushd /c/examples_of_my_work/gellmvc/gellmvc
-echo "pwd: $(pwd)"
 printf "\n"
 
-# 1. KuduSync
-if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
-  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE/gellmvc/bin" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
-  exitWithMessageOnError "Kudu Sync failed"
-fi
-printf "\n"
-popd
-echo "pwd: $(pwd)"
+echo "NPM, BOWER, GRUNT..."
 
-
-
-
-# 2. Select node version
+# Go to repo root.
+cd "$DEPLOYMENT_SOURCE"
 selectNodeVersion
 
-# 3. Install NPM packages
-if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
+# Install NPM packages
+if [ -e "$DEPLOYMENT_SOURCE/package.json" ]; then
+  cd "$DEPLOYMENT_SOURCE"
+  pause "Press [Enter] to run NPM install"
   eval $NPM_CMD prune
   echo "Do npm install --production"
   eval $NPM_CMD install --production
@@ -203,10 +183,10 @@ if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
   cd - > /dev/null
 fi
 
-
-# 4. Install Bower modules
-if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
+# Install Bower modules
+if [ -e "$DEPLOYMENT_SOURCE/bower.json" ]; then
+  cd "$DEPLOYMENT_SOURCE"
+  pause "Press [Enter] to run bower install"
   eval rm -rf bower_components
   echo deleted bower components
   eval ./node_modules/.bin/bower install
@@ -214,21 +194,44 @@ if [ -e "$DEPLOYMENT_TARGET/bower.json" ]; then
   cd - > /dev/null
 fi
 
-
-# 5. Run Grunt Task
-if [ -e "$DEPLOYMENT_TARGET/Gruntfile.js" ]; then
-  cd "$DEPLOYMENT_TARGET"
+# Run Grunt Task
+if [ -e "$DEPLOYMENT_SOURCE/Gruntfile.js" ]; then
+  cd "$DEPLOYMENT_SOURCE"
+  pause "Press [Enter] to run grunt"
   eval ./node_modules/.bin/grunt --no-color --verbose
   exitWithMessageOnError "Grunt failed"
   cd - > /dev/null
 fi
 
-# 6. List the installed files for View Log
+# List the installed files for View Log
 echo "List the installed files..."
-cd "$DEPLOYMENT_TARGET"
-ls -la
-ls -la gellmvc/dist/fonts/bootstrap
-ls -la gellmvc/dist/**
-cd - > /dev/null
+cd "$DEPLOYMENT_SOURCE"
+ls -la # repo
+ls -la gellmvc/dist/fonts/bootstrap # fonts
+ls -la gellmvc/dist/** # bower files
+
+
+
+
+# Finished installing dependencies.
+printf "\n"
+printf "\n"
+pause "Press [Enter] to run KUDUSYNC (copy files to artifacts/wwwroot)"
+
+
+# KUDU SYNC deployTemp -> artifacts/wwwroot
+echo "KUDU SYNC... DEPLOYMENT_SOURCE == $DEPLOYMENT_SOURCE"
+echo "KUDU_SYNC_CMD == $KUDU_SYNC_CMD"
+pushd /c/examples_of_my_work/gellmvc/gellmvc
+printf "\n"
+
+# 1. KuduSync
+if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
+  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh;deploy.cmd;README.md;package.json;Gruntfile.js;bower.json;.gitignore;.bowerrc"
+  exitWithMessageOnError "Kudu Sync failed"
+fi
+printf "\n"
+popd
+echo "pwd: $(pwd)"
 
 echo "Finished successfully."
