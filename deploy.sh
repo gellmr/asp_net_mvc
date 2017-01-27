@@ -8,9 +8,9 @@
 # Helpers
 # -------
 
-pause() {
-   read -p "$*"
-}
+#pause() {}
+#   read -p "$*"
+#}
 
 exitWithMessageOnError () {
   if [ ! $? -eq 0 ]; then
@@ -45,8 +45,7 @@ echo "SCRIPT_DIR: $SCRIPT_DIR"
 #echo "SCRIPT_DIR: $SCRIPT_DIR"
 
 ARTIFACTS=$SCRIPT_DIR/../artifacts
-#KUDU_SYNC_CMD=${KUDU_SYNC_CMD//\"}
-KUDU_SYNC_CMD="kudusync"
+KUDU_SYNC_CMD=${KUDU_SYNC_CMD}
 
 if [[ ! -n "$DEPLOYMENT_SOURCE" ]]; then
   DEPLOYMENT_SOURCE=$SCRIPT_DIR
@@ -78,11 +77,7 @@ if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
   mkdir "$DEPLOYMENT_TEMP"
 fi
 
-echo "MSBUILD_PATH already defined on azure? $MSBUILD_PATH"
 if [[ ! -n "$MSBUILD_PATH" ]]; then
-  # location on deploy.cmd...
-  #MSBUILD_PATH="ProgramFiles(x86)\MSBuild\14.0\Bin\MSBuild.exe"
-  
   # location on my machine...
   MSBUILD_PATH="/c/Program Files/MSBuild/14.0/Bin/MSBuild.exe"
 fi
@@ -146,7 +141,7 @@ fi
 
 # Build to the temporary path
 printf "\n"
-pushd /c/examples_of_my_work/gellmvc
+cd "$DEPLOYMENT_SOURCE"
 printf "\n"
 echo "Do MSBuild..."
 printf "\n"
@@ -160,10 +155,6 @@ printf "\n"
 "$MSBUILD_PATH" "gellmvc.sln" "/property:OutputPath=../$DEPLOYMENT_TEMP"
 
 echo "Compiled solution into ___deployTemp"
-
-
-printf "\n"
-popd
 printf "\n"
 
 echo "NPM, BOWER, GRUNT..."
@@ -175,7 +166,7 @@ selectNodeVersion
 # Install NPM packages
 if [ -e "$DEPLOYMENT_SOURCE/package.json" ]; then
   cd "$DEPLOYMENT_SOURCE"
-  pause "Press [Enter] to run NPM install"
+  #pause "Press [Enter] to run NPM install"
   eval $NPM_CMD prune
   echo "Do npm install --production"
   eval $NPM_CMD install --production
@@ -186,7 +177,7 @@ fi
 # Install Bower modules
 if [ -e "$DEPLOYMENT_SOURCE/bower.json" ]; then
   cd "$DEPLOYMENT_SOURCE"
-  pause "Press [Enter] to run bower install"
+  #pause "Press [Enter] to run bower install"
   eval rm -rf bower_components
   echo deleted bower components
   eval ./node_modules/.bin/bower install
@@ -197,32 +188,20 @@ fi
 # Run Grunt Task
 if [ -e "$DEPLOYMENT_SOURCE/Gruntfile.js" ]; then
   cd "$DEPLOYMENT_SOURCE"
-  pause "Press [Enter] to run grunt"
+  #pause "Press [Enter] to run grunt"
   eval ./node_modules/.bin/grunt --no-color --verbose
   exitWithMessageOnError "Grunt failed"
   cd - > /dev/null
 fi
 
-# List the installed files for View Log
-echo "List the installed files..."
-cd "$DEPLOYMENT_SOURCE"
-ls -la # repo
-ls -la gellmvc/dist/fonts/bootstrap # fonts
-ls -la gellmvc/dist/** # bower files
-
-
-
-
 # Finished installing dependencies.
 printf "\n"
 printf "\n"
-pause "Press [Enter] to run KUDUSYNC (copy files to artifacts/wwwroot)"
-
+#pause "Press [Enter] to run KUDUSYNC (copy files to artifacts/wwwroot)"
 
 # KUDU SYNC deployTemp -> artifacts/wwwroot
-echo "KUDU SYNC... DEPLOYMENT_SOURCE == $DEPLOYMENT_SOURCE"
-echo "KUDU_SYNC_CMD == $KUDU_SYNC_CMD"
-pushd /c/examples_of_my_work/gellmvc/gellmvc
+echo "DEPLOYMENT_SOURCE == $DEPLOYMENT_SOURCE"
+echo "KUDU_SYNC_CMD     == $KUDU_SYNC_CMD"
 printf "\n"
 
 # 1. KuduSync
@@ -230,8 +209,6 @@ if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
   "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh;deploy.cmd;README.md;package.json;Gruntfile.js;bower.json;.gitignore;.bowerrc"
   exitWithMessageOnError "Kudu Sync failed"
 fi
-printf "\n"
-popd
-echo "pwd: $(pwd)"
 
+printf "\n"
 echo "Finished successfully."
