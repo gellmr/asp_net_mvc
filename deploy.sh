@@ -79,6 +79,8 @@ if [[ -n "$CLEAN_LOCAL_DEPLOYMENT_TEMP" ]]; then
   mkdir "$DEPLOYMENT_TEMP"
 fi
 
+echo "DEPLOYMENT_TEMP: $DEPLOYMENT_TEMP"
+
 if [[ ! -n "$MSBUILD_PATH" ]]; then
   # location on my machine...
   MSBUILD_PATH="/c/Program Files/MSBuild/14.0/Bin/MSBuild.exe"
