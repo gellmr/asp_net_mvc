@@ -201,18 +201,19 @@ if [ -e "$DEPLOYMENT_SOURCE/Gruntfile.js" ]; then
   cd - > /dev/null
 fi
 
-
-pause "press ENTER to copy dist files to ___deployTemp/_PublishedWebsites/gellmvc"
+echo "This will copy dist files to ___deployTemp/_PublishedWebsites/gellmvc"
+pause "press ENTER"
 if [ ! -d "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc ]; then
   mkdir -p "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc
 fi
 if [ -d "$DEPLOYMENT_SOURCE/gellmvc/dist" ]; then
   cp -R "$DEPLOYMENT_SOURCE"/gellmvc/dist "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc
+else
+  echo "$DEPLOYMENT_SOURCE/gellmvc/dist" does not exist
 fi
 
-pause "press ENTER to Copy gellmvc/___deployTemp into the Kudu ___deployTemp folder"
-
-# Copy gellmvc/___deployTemp into Kudu's ___deployTemp folder
+echo "This will copy gellmvc/___deployTemp into the Kudu ___deployTemp folder..."
+pause "press ENTER"
 if [ "$HOSTNAME" = "COSYGLOW" ]; then
   cp -R "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/* "$DEPLOYMENT_SOURCE"/___deployTemp/
 fi
@@ -228,16 +229,20 @@ if [[ ! -d "$ARTIFACTS"/wwwroot ]]; then
   cd "$ARTIFACTS"
   mkdir "wwwroot"
   popd
+else
+  echo "artifacts/wwwroot already exists"
 fi
 
 printf "\n"
 printf "\n"
-pause "press ENTER to delete $DEPLOYMENT_SOURCE/gellmvc/___deployTemp"
+echo "This will delete $DEPLOYMENT_SOURCE/gellmvc/___deployTemp"
+pause "press ENTER"
 rm -rf "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp
 
 printf "\n"
 printf "\n"
-pause "press ENTER to run KuduSync - copy files to artifacts/wwwroot"
+echo "This will run KuduSync - copy files to artifacts/wwwroot"
+pause "press ENTER"
 
 # KUDU SYNC deployTemp -> artifacts/wwwroot
 echo "DEPLOYMENT_SOURCE == $DEPLOYMENT_SOURCE"
@@ -249,4 +254,4 @@ printf "\n"
 exitWithMessageOnError "Kudu Sync failed"
 
 printf "\n"
-echo "Finished successfully."
+echo "End of deploy.sh"
