@@ -148,14 +148,19 @@ printf "\n"
 printf "\n"
 echo "Do MSBuild..."
 # Tell MSBuild to build our solution.
-# compiles to /gellmvc/gellmvc/___deployTemp
+# compiles to /gellmvc/gellmvc/___deployTemp/_PublishedWebsites
+
 "$MSBUILD_PATH" "gellmvc.sln" "/property:Configuration=Release;TargetFramework=v4.5.2;OutputPath=$DEPLOYMENT_TEMP"
+
+#"$MSBUILD_PATH" "gellmvc.sln" "/t:pipelinePreDeployCopyAllFilesToOneFolder /property:_PackageTempDir=$DEPLOYMENT_TEMP;AutoParameterizationWebConfigConnectionStrings=false;Configuration=Release;UseSharedCompilation=false;TargetFramework=v4.5.2"
+
+
 printf "\n"
 printf "\n"
 
 echo "NPM, BOWER, GRUNT..."
 
-#pause "press ENTER to install NPM stuff"
+pause "press ENTER to install NPM stuff"
 
 # Go to repo root.
 cd "$DEPLOYMENT_SOURCE"
@@ -194,10 +199,12 @@ if [ -e "$DEPLOYMENT_SOURCE/Gruntfile.js" ]; then
   cd - > /dev/null
 fi
 
-#pause "press ENTER to copy dist files to ___deployTemp/_PublishedWebsites/gellmvc"
 
-# Copy dist files into ___deployTemp
-if [ -e "$DEPLOYMENT_SOURCE/gellmvc/dist" ]; then
+pause "press ENTER to copy dist files to ___deployTemp/_PublishedWebsites/gellmvc"
+if [ ! -d "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc ]; then
+  mkdir -p "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc
+fi
+if [ -d "$DEPLOYMENT_SOURCE/gellmvc/dist" ]; then
   cp -R "$DEPLOYMENT_SOURCE"/gellmvc/dist "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc
 fi
 
