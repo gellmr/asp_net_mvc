@@ -43,16 +43,17 @@ the website user will download as he visits the site (eg jquery)
 
 The reason for this is NPM just gets everything in your dependency
 list so you don't have to resolve conflicting dependencies, you
-can just install everything, even have 3 versions of bootstrap-sass
+can just install everything, even have 3 versions of something,
 if you want to.
 
 But bower has a flat dependency graph so it only lets
-you have one version of jquery. This is good because it minimizes the
+you have one version. Eg one version of jquery. This is good because it minimizes the
 amount of download for the user.
 
 NPM is good for all the loads of libraries
-that will sit on the server because it doesnt matter if we have 3 versions
-of ruby installed there.
+that will sit on the server because it doesnt matter if we have 3 versions of a library
+of installed there, and they have huge dependency chains so it would be a lot of work to resolve
+them. NPM just grabs them all.
 
 Reopen cmd as admin. Install bower like this:  
 choco install bower
