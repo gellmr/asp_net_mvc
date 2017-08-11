@@ -31,7 +31,7 @@ Next we will clone the git repo down onto our local hard drive.
 Navigate to C:/Users/G50/mvc_projects/
 
 Run the following command to clone the github repo to your machine.  
-git clone https://github.com/gellmr/asp_net_mvc.git
+> git clone https://github.com/gellmr/asp_net_mvc.git
 
 You now have C:\Users\G50\mvc_projects\asp_net_mvc
 
@@ -127,8 +127,6 @@ files into one compiled css file "gellmvc\dist\site.css"
 
 Now we are ready to deploy these files to azure.
 
-## (TODO - write steps for MSBuild, Kudusync and Azure deployment)##
+### (TODO - write steps for MSBuild, Kudusync and Azure deployment) ###
 
-[The site can be viewed here] (http://mike-gell.azurewebsites.net)
-
-It is currently hosted on Azure.
+[The URL to view this site] (http://mike-gell.azurewebsites.net)
