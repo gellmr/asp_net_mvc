@@ -23,7 +23,7 @@ namespace gellmvc
 
             bundles.Add(new ScriptBundle("~/js_bundles/Microsoft.jQuery.Unobtrusive.Validation").Include(
                         "~/dist/Microsoft.jQuery.Unobtrusive.Validation/jquery.validate.unobtrusive.js"));
-
+      
             // allow debug mode to serve minified files.
             //BundleTable.EnableOptimizations = true;
         }
