@@ -1,53 +1,95 @@
 ﻿@model gellmvc.Models.CartIndexViewModel
 @{
-    ViewBag.Title = "Sports Store: Your Cart";
+  ViewBag.Title = "Your Cart";
 }
 
-<style>
-  #cartTable td { vertical-align: middle; }
-</style>
+@using (Html.BeginForm("SubmitCart", "Cart"))
+{
+  
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="centeredProducts">
+        <div class="alert alert-warning" id="serverError" style="display:none;">
+          There was a server error.
+        </div>
+        <!-- render partials/flash message -->
+        <div class="row">
+          <div class="col-sm-12 hidden-xs">
+            <div class="text-center">
+              <h3 class="content-heading">
+                <img src="~/Content/images/cartLogo.png" alt="Cart Logo" />
+                <span>My Cart: @Model.Cart.Lines.Count() Lines </span>
+              </h3>
+            </div>
+          </div>
+          <div class="col-xs-12 visible-xs">
+            <div class="row">
+              <div class="col-xs-5" style='margin-top:15px'>
+                <img src="~/Content/images/cartLogo.png" alt="Cart Logo" />
+              </div>
+              <div class="col-xs-7">
+                <h3 class="content-heading">
+                  My Cart: @Model.Cart.Lines.Count() Lines
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<h2>Your cart</h2>
-<table id="cartTable" class="table">
-  <thead>
-    <tr>
-      <th>Quantity</th>
-      <th>Item</th>
-      <th class="text-right">Price</th>
-      <th class="text-right">Subtotal</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach (var line in Model.Cart.Lines)
-    {
-      <tr>
-        <td class="text-center">@line.Quantity</td>
-        <td class="text-left">@line.Product.Name</td>
-        <td class="text-center">@line.Product.UnitPrice.ToString("c")</td>
-        <td class="text-right">
-          @((line.Quantity * line.Product.UnitPrice).ToString("c"))
-        </td>
-        <td>
-          @using (Html.BeginForm("RemoveFromCart", "Cart"))
+        @if (Model.Cart.Lines.Count() == 0)
+        {
+
+          <span>Page Go Back</span>
+          <!-- render "partials/pageGoBack", {goback_message: "Your cart is empty!", goback_btn_text:"Go back to Store", goback_btn_path: store_index_path} -->
+        }
+        else
+        {
+          //cart has items
+
+          <div class="row content-header-row">
+            <div class="col-xs-6">
+              <div class="row">
+                <a href="@Model.ReturnUrl" class="btn btn-default content-header-btn">Back To Store</a>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="row">
+                <div class="pull-right">
+
+                  @Html.ActionLink("Clear My Cart", "ClearCart", "Cart", new { cart = Model.Cart }, new Dictionary<string, object> {
+                    { "id", "clearMyCartBtn" },
+                    { "class", (Model.Cart.Lines.Count() > 0) ? "btn btn-default content-header-btn" : "btn btn-default content-header-btn disabled"}
+                  })
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          foreach (var line in Model.Cart.Lines)
           {
-            @Html.Hidden("ProductId", line.Product.Id)
-            @Html.HiddenFor( x => x.ReturnUrl )
-            <input class="btn btn-sm btn-warning" type="submit" value="Remove" />
+            @Html.Partial("~/Views/Partials/Shopping/_ForSaleProductLine.cshtml", line)
           }
-        </td>
-      </tr>
-    }
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="3" class="text-right">Total:</td>
-      <td class="text-right">
-        @Model.Cart.ComputeTotalValue().ToString("c")
-      </td>
-    </tr>
-  </tfoot>
-</table>
 
-<div class="text-center">
-  <a class="btn btn-primary" href="@Model.ReturnUrl">Continue shopping</a>
-</div>
+          @Html.Partial("~/Views/Partials/Shopping/_SummaryRow.cshtml")
+
+          if (Model.Cart.Lines.Count() > 0)
+          {
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="text-center">
+                <h3>
+                  @Html.ActionLink("Proceed to checkout", "Index", new { }, new { @class = "btn btn-default cart-submit-btn" })
+                </h3>
+              </div>
+            </div>
+          </div>
+          }
+          }
+
+        </div>
+    </div>
+  </div>
+
+}
+<!-- </form> -->

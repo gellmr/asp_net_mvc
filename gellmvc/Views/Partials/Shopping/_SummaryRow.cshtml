@@ -1,0 +1,50 @@
+﻿@model gellmvc.Models.CartIndexViewModel
+
+<div class="row well transparentBackground cart-summary-row">
+
+  <div class="col-xs-12 col-sm-4">
+    <!-- Details Column -->
+  </div>
+
+  <div class="col-xs-12 col-sm-3">
+    <!-- Image Column -->
+  </div>
+
+  <div class="col-xs-12 col-sm-5">
+    <div class="row">
+
+      <!-- Total Items -->
+      <div class="col-xs-6">
+        <div class="row">
+          <label>
+            Total Items:
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="form-group" style="margin-right: 5px;">
+
+            @Model.Cart.ComputeTotalItems()
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Grand Total -->
+      <div class="col-xs-6">
+        <div class="row">
+          <label>
+            Grand Total:
+          </label>
+        </div>
+
+        <div class="row">
+
+          @Model.Cart.ComputeTotalValue()
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

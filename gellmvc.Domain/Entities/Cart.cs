@@ -34,6 +34,12 @@ namespace gellmvc.Domain.Entities
       return lineCollection.Sum(e => e.Product.UnitPrice * e.Quantity);
     }
 
+    public decimal ComputeTotalItems()
+    {
+      return 100.0M;
+      //return lineCollection.Sum(e => e.Product.QuantityToOrder);
+    }
+
     public void Clear()
     {
       lineCollection.Clear();

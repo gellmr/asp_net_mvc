@@ -298,6 +298,7 @@
     <Content Include="Views\Partials\Shopping\_x_btn_remove_from_cart.cshtml" />
     <Content Include="Views\Shared\ProductSummary.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Partials\Shopping\_SummaryRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

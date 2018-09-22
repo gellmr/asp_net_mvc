@@ -3,8 +3,11 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         
         clean: {
-          // delete everything in dist
-          dist: ['gellmvc/dist/*']
+            Content: [
+            'gellmvc/Content/**/*',
+            '!gellmvc/Content/images/**/*',
+            '!gellmvc/Content/images'
+            ]
         },
 
         // Compile SASS files into minified CSS.
@@ -19,7 +22,7 @@ module.exports = function (grunt) {
                 },
                 // the file that i want to compile. eg, 'dist/compiled.css' : 'scss/source.scss'
                 files: {
-                    'gellmvc/dist/site.css': 'gellmvc/scss/site.scss'
+                    'gellmvc/Content/site.css': 'gellmvc/scss/site.scss'
                 }
             }
         },
@@ -35,7 +38,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/bootstrap-sass/assets/javascripts/',
                         src: ['**/*.js'],
-                        dest: 'gellmvc/dist/bootstrap-sass/'
+                        dest: 'gellmvc/Content/bootstrap-sass/'
                     },
 
                     //jquery
@@ -43,7 +46,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/jquery/dist/',
                         src: ['**/*.js', '**/*.map'],
-                        dest: 'gellmvc/dist/jquery/'
+                        dest: 'gellmvc/Content/jquery/'
                     },
 
                     //jquery.validation
@@ -51,7 +54,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/jquery.validation/dist/',
                         src: ['**/*.js'],
-                        dest: 'gellmvc/dist/jquery.validation/'
+                        dest: 'gellmvc/Content/jquery.validation/'
                     },
 
                     // Microsoft.jQuery.Unobtrusive.Validation
@@ -59,7 +62,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'bower_components/Microsoft.jQuery.Unobtrusive.Validation/',
                         src: ['**/*.js'],
-                        dest: 'gellmvc/dist/Microsoft.jQuery.Unobtrusive.Validation/'
+                        dest: 'gellmvc/Content/Microsoft.jQuery.Unobtrusive.Validation/'
                     },
 
                     // Fonts.
@@ -69,15 +72,15 @@ module.exports = function (grunt) {
                         flatten: true,
                         cwd: 'bower_components/',
                         src: ['bootstrap-sass/assets/fonts/**'],
-                        dest: 'gellmvc/dist/fonts/bootstrap/'
+                        dest: 'gellmvc/Content/fonts/bootstrap/'
                     },
 
                     // site images.
-                    {
-                        expand: true,
-                        src: ['site_images/**'],
-                        dest: 'gellmvc/dist/'
-                    },
+                    //{
+                    //    expand: true,
+                    //    src: ['site_images/**'],
+                    //    dest: 'gellmvc/Content/'
+                    //},
                 ]
             },
         },
@@ -101,8 +104,9 @@ module.exports = function (grunt) {
     //grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
 
+
     // Establish tasks we can run from the terminal.
-    grunt.registerTask('default', ['clean', 'copy', 'sass']);
+    grunt.registerTask('default', ['clean', 'copy', 'sass']); // must copy first. so that sass will be able to build
     //grunt.registerTask('build', ['clean', 'copy', 'sass']);
     //grunt.registerTask('default', ['clean', 'build', 'watch']);
 }

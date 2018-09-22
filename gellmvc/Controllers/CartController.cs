@@ -16,9 +16,9 @@ namespace gellmvc.Controllers
 
     public ViewResult Index(Cart cart, string returnUrl)
     {
-      return View( new CartIndexViewModel {
-        ReturnUrl = returnUrl,
-        Cart = cart
+      return View(new CartIndexViewModel {
+        Cart = cart,
+        ReturnUrl = returnUrl
       });
     }
 
@@ -41,6 +41,12 @@ namespace gellmvc.Controllers
         cart.RemoveLine(product);
       }
       return RedirectToAction("Index", new { returnUrl });
+    }
+
+    public RedirectToRouteResult ClearCart(Cart cart)
+    {
+      cart.Clear();
+      return RedirectToAction("Index");
     }
   }
 }

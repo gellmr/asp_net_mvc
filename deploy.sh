@@ -192,7 +192,7 @@ fi
 
 #pause "press ENTER to run grunt tasks"
 
-# Run Grunt Task. This populates dist
+# Run Grunt Task. This populates Content folder
 if [ -e "$DEPLOYMENT_SOURCE/Gruntfile.js" ]; then
   cd "$DEPLOYMENT_SOURCE"
   #pause "Press [Enter] to run grunt"
@@ -201,15 +201,15 @@ if [ -e "$DEPLOYMENT_SOURCE/Gruntfile.js" ]; then
   cd - > /dev/null
 fi
 
-echo "This will copy dist files to ___deployTemp/_PublishedWebsites/gellmvc"
+echo "This will copy Content files to ___deployTemp/_PublishedWebsites/gellmvc"
 pause "press ENTER"
 if [ ! -d "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc ]; then
   mkdir -p "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc
 fi
-if [ -d "$DEPLOYMENT_SOURCE/gellmvc/dist" ]; then
-  cp -R "$DEPLOYMENT_SOURCE"/gellmvc/dist "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc
+if [ -d "$DEPLOYMENT_SOURCE/gellmvc/Content" ]; then
+  cp -R "$DEPLOYMENT_SOURCE"/gellmvc/Content "$DEPLOYMENT_SOURCE"/gellmvc/___deployTemp/_PublishedWebsites/gellmvc
 else
-  echo "$DEPLOYMENT_SOURCE/gellmvc/dist" does not exist
+  echo "$DEPLOYMENT_SOURCE/gellmvc/Content" does not exist
 fi
 
 echo "This will copy gellmvc/___deployTemp into the Kudu ___deployTemp folder..."

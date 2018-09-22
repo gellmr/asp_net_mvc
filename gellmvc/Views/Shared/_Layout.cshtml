@@ -1,23 +1,31 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="~/Content/bootstrap.css" rel="stylesheet" />
-  <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+  <!-- Bootstrap - The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <link href="~/Content/site.css" rel="stylesheet" />
+  <script type="text/javascript" src="@Url.Content("/Content/jquery/jquery.min.js")"></script>
+  <script type="text/javascript" src="@Url.Content("/Content/bootstrap-sass/bootstrap.min.js")"></script>
+
   <title>@ViewBag.Title</title>
 </head>
+
 <body>
-  <div class="navbar navbar-inverse" role="navigation">
-    <a class="navbar-brand" href="#">SPORTS STORE</a>
-  </div>
-  <div class="row panel">
-    <div id="categories" class="col-xs-3">
-      Put something here.
-    </div>
-    <div class="col-xs-8">
+  <div class="container">
+    
+    <div class="top-level-container">
+      <a href="#pagetop"></a>
+      <div class="navbar" role="navigation">
+        <a class="navbar-brand" href="#">Mike Gell Demo</a>
+      </div>
+
       @RenderBody()
     </div>
+
   </div>
 </body>
 </html>
