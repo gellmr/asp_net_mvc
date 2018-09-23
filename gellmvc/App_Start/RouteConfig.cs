@@ -16,13 +16,13 @@ namespace gellmvc
       routes.MapRoute(
         name: null,
         url: "Page{page}",
-        defaults: new { Controller = "Product", action = "List" }
+        defaults: new { Controller = "Store", action = "Index" }
       );
 
       routes.MapRoute(
         name: "Default",
         url: "{controller}/{action}/{id}",
-        defaults: new { controller = "Product", action = "List", id = UrlParameter.Optional }
+        defaults: new { controller = "Store", action = "Index", id = UrlParameter.Optional }
       );
     }
   }

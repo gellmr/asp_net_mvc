@@ -13,10 +13,8 @@ namespace gellmvc.Controllers
   {
     private IProductRepository repository;
     public int PageSize = 4;
-
-    // constructor with DI
-    public ProductController(IProductRepository productRepository)
-    {
+    
+    public ProductController(IProductRepository productRepository){
         this.repository = productRepository;
     }
 
@@ -24,15 +22,14 @@ namespace gellmvc.Controllers
     {
       ProductsListViewModel model = new ProductsListViewModel
       {
-        Products = repository.Products
-        .OrderBy(p => p.Id)
-        .Skip((page - 1) * PageSize)
-        .Take(PageSize),
-        PagingInfo = new PagingInfo {
-          CurrentPage = page,
-          ItemsPerPage = PageSize,
-          TotalItems = repository.Products.Count()
-        }
+        Products = repository.Products.OrderBy(p => p.Id)
+          .Skip((page - 1) * PageSize)
+          .Take(PageSize),
+          PagingInfo = new PagingInfo {
+            CurrentPage = page,
+            ItemsPerPage = PageSize,
+            TotalItems = repository.Products.Count()
+          }
       };
       return View(model);
     }

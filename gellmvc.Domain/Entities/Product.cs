@@ -17,4 +17,11 @@ namespace gellmvc.Domain.Entities
     public int QuantityInStock { get; set; }
     public DateTime CreatedAt { get; set; }
   }
+
+  public class ProductLine
+  {
+    public Product Product { get; set; }
+    public int QtyInCart { get; set; }
+    public decimal Subtotal { get; set; }
+  }
 }

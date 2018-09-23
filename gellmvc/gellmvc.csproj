@@ -231,6 +231,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PagingInfo.cs" />
+    <Compile Include="Models\StoreListViewModel.cs" />
     <Compile Include="Models\ProductsListViewModel.cs" />
     <Compile Include="Models\ShoppingViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

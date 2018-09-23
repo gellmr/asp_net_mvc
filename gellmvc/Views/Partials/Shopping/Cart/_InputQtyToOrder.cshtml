@@ -1,4 +1,4 @@
-﻿@model gellmvc.Domain.Entities.Cart.CartLine
+﻿@model gellmvc.Domain.Entities.ProductLine
 
 <div class="col-xs-12 col-sm-5 parental-div parentalDiv-@Model.Product.Id">
 
@@ -17,7 +17,7 @@
 
           @Html.TextBox(
               "qtyToOrder-input",
-              Model.Quantity,
+              Model.QtyInCart,
               new
               {
                   @class = "form-control qtyToOrder-input",
@@ -49,16 +49,16 @@
 
     @* IN-CART ICON *@
     @{
-      var SiteImages = gellmvc.Helpers.ApplicationHelper.SiteImagesFolderPath();
+      var Folder = gellmvc.Helpers.ApplicationHelper.SiteImagesFolderPath();
       var icon_style = "display: block;";
-      if (Model.Quantity < 1)
+      if (Model.QtyInCart < 1)
       {
         icon_style = "display: none;";
       }
     }
     <div class="col-xs-4 inCartIcon" style="@icon_style">
       <div class="row">
-        <img alt="(Added to cart)" class="img-rounded centered-block-img" src="~/Content/images/inCart60x60.png" />
+        <img alt="(Added to cart)" class="img-rounded centered-block-img" src="@Folder/inCart60x60.png" />
       </div>
     </div>
   </div>

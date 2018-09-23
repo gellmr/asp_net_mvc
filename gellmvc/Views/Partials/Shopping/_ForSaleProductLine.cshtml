@@ -1,4 +1,4 @@
-﻿@model gellmvc.Domain.Entities.Cart.CartLine
+﻿@model gellmvc.Domain.Entities.ProductLine
 
 @*@Html.DisplayFor(m => @Model.Product.Id)
 @Html.DisplayFor(m => @Model.Product.Name)
@@ -43,7 +43,10 @@
 
   <!-- Image tag, always visible -->
   <div class="col-xs-12 col-sm-3 dbug-always-visible">
-    <img src="~/Content/images/120x120/@Model.Product.ImageUrl"  alt="~/Content/images/120x120/@Model.Product.ImageUrl" class="img-rounded img-responsive centered-block-img with-vert-margins" />
+    @{
+      string imgFolder = gellmvc.Helpers.ApplicationHelper.ProductImagesFolder();
+    }
+    <img src="@imgFolder/@Model.Product.ImageUrl"  alt="@imgFolder/@Model.Product.ImageUrl" class="img-rounded img-responsive centered-block-img with-vert-margins" />
   </div>
 
   @Html.Partial("~/Views/Partials/Shopping/Cart/_InputQtyToOrder.cshtml")

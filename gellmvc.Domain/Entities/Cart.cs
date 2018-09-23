@@ -8,20 +8,27 @@ namespace gellmvc.Domain.Entities
   {
     private List<CartLine> lineCollection = new List<CartLine>();
 
-    public void AddItem(Product product, int quantity)
+    public class CartLine
     {
-      CartLine line = lineCollection
-        .Where(p => p.Product.Id == product.Id)
-        .FirstOrDefault();
+      public Product Product { get; set; }  // eg $10 each
+      public int Quantity { get; set; }     // eg   5
+      public decimal SubTotal { get; set; } // eg   5 x $10 == $50
+    }
 
-      if (line == null)
-      {
-        lineCollection.Add(new CartLine { Product = product, Quantity = quantity });
-      }
-      else
-      {
-        line.Quantity += quantity;
-      }
+    public IEnumerable<CartLine> Lines
+    {
+      get{ return lineCollection; }
+    }
+    
+    public int TotalItemsInCart()
+    {
+      return lineCollection.Sum(e => e.Quantity);
+    }
+
+    // Total Amount Payable for all the items in the cart.
+    public decimal GrandTotal()
+    {
+      return lineCollection.Sum(e => e.Product.UnitPrice * e.Quantity);
     }
 
     public void RemoveLine(Product product)
@@ -29,32 +36,41 @@ namespace gellmvc.Domain.Entities
       lineCollection.RemoveAll(l => l.Product.Id == product.Id);
     }
 
-    public decimal ComputeTotalValue()
-    {
-      return lineCollection.Sum(e => e.Product.UnitPrice * e.Quantity);
-    }
-
-    public decimal ComputeTotalItems()
-    {
-      return 100.0M;
-      //return lineCollection.Sum(e => e.Product.QuantityToOrder);
-    }
-
     public void Clear()
     {
       lineCollection.Clear();
     }
 
-    public IEnumerable<CartLine> Lines {
-      get
+    // Returns how many of the given product is in the cart, or zero.
+    public int GetQuantity(Product product)
+    {
+      foreach (CartLine line in lineCollection)
       {
-        return lineCollection;
+        if (line.Product.Id == product.Id)
+        {
+          return line.Quantity;
+        }
       }
+      return 0;
     }
 
-    public class CartLine {
-      public Product Product { get; set; }
-      public int Quantity { get; set; }
+    public void AddItem(Product product, int quantity)
+    {
+      // Check if we already have one of these in the cart.
+      CartLine line = lineCollection
+        .Where(p => p.Product.Id == product.Id)
+        .FirstOrDefault();
+
+      // If we already have one of these items in the cart, increment its quantity.
+      // Otherwise, add the new item to the cart.
+      if (line != null)
+      {
+        line.Quantity += quantity;
+      }
+      else
+      {
+        lineCollection.Add(new CartLine { Product = product, Quantity = quantity });
+      }
     }
   }
 }

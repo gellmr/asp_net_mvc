@@ -4,9 +4,10 @@ using gellmvc.Helpers;
 
 namespace gellmvc.Models
 {
-  public class ProductsListViewModel
+  public class StoreListViewModel
   {
-    public IEnumerable<Product> Products { get; set; }
+    public IEnumerable<ProductLine> ProductLines { get; set; }
     public PagingInfo PagingInfo { get; set; }
+    public Cart Cart { get; set; }
   }
 }
