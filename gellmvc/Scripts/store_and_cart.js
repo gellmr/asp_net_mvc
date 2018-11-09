@@ -178,6 +178,7 @@
       complete: function (xhr, textStatus) {
         //console.log("XHR COMPLETED with status " + textStatus + "\n");
         if (textStatus == "success") {
+          //nothing
         }
       }
     });

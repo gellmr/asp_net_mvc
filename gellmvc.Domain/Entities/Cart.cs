@@ -54,7 +54,8 @@ namespace gellmvc.Domain.Entities
       return 0;
     }
 
-    public void AddItem(Product product, int quantity)
+    // Update a line quantity in the cart
+    public CartLine SetLineQuantity(Product product, int quantity)
     {
       // Check if we already have one of these in the cart.
       CartLine line = lineCollection
@@ -65,12 +66,15 @@ namespace gellmvc.Domain.Entities
       // Otherwise, add the new item to the cart.
       if (line != null)
       {
-        line.Quantity += quantity;
+        line.Quantity = quantity;
+        line.SubTotal = product.UnitPrice * quantity;
       }
       else
       {
-        lineCollection.Add(new CartLine { Product = product, Quantity = quantity });
+        line = new CartLine { Product = product, Quantity = quantity, SubTotal = product.UnitPrice * quantity };
+        lineCollection.Add(line);
       }
+      return line;
     }
   }
 }
