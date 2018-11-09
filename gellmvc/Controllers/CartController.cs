@@ -48,5 +48,11 @@ namespace gellmvc.Controllers
       cart.Clear();
       return RedirectToAction("Index");
     }
+
+    [HttpPost]
+    public HttpStatusCodeResult PutUpdate(CartUpdate cartUpdate)
+    {
+      return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
+    }
   }
 }

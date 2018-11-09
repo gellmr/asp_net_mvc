@@ -10,4 +10,10 @@ namespace gellmvc.Models
     public Cart Cart { get; set; }
     public string ReturnUrl { get; set; }
   }
+
+  public class CartUpdate
+  {
+    public int ProductId { get; set; }
+    public int NewQty { get; set; }
+  }
 }
