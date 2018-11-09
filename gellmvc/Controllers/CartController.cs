@@ -14,14 +14,6 @@ namespace gellmvc.Controllers
       repository = repo;
     }
 
-    public ViewResult Index(Cart cart, string returnUrl)
-    {
-      return View(new CartIndexViewModel {
-        Cart = cart,
-        ReturnUrl = returnUrl
-      });
-    }
-
     public RedirectToRouteResult AddToCart(Cart cart, int Id, string returnUrl)
     {
       Product product = repository.Products.FirstOrDefault(p => p.Id == Id);
@@ -49,9 +41,33 @@ namespace gellmvc.Controllers
       return RedirectToAction("Index");
     }
 
-    [HttpPost]
-    public HttpStatusCodeResult PutUpdate(CartUpdate cartUpdate)
+
+    public ViewResult Index(Cart cart, string returnUrl)
     {
+      return View(new CartIndexViewModel
+      {
+        Cart = cart,
+        ReturnUrl = returnUrl
+      });
+    }
+
+    [HttpPut]
+    public HttpStatusCodeResult PutUpdate(Cart cart, CartUpdate cartUpdate)
+    {
+      // Check if there are sufficient quantity in stock.
+      Product product = repository.Products.FirstOrDefault(p => p.Id == cartUpdate.ProductId);
+
+      if (product.QuantityInStock >= cartUpdate.NewQty)
+      {
+        // We have enough stock...
+        if (cartUpdate.NewQty == 0)
+        {
+          // User set qty to zero.
+          cart.RemoveLine(product);
+          return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK, "Removed line: " + product.Name);
+        }
+      }
+
       return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
     }
   }

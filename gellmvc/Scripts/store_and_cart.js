@@ -113,7 +113,7 @@
 
     $.ajax({
       url: "/Cart/PutUpdate",
-      type: 'POST',
+      type: 'PUT',
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       data: JSON.stringify(params),
