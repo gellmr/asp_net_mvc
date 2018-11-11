@@ -64,7 +64,8 @@ namespace gellmvc.Controllers
           ItemsPerPage = PageSize,
           TotalItems = repository.Products.Count()
         },
-        Cart = cart
+        Cart = cart,
+        SearchString = searchString
       };
 
       return viewModel;

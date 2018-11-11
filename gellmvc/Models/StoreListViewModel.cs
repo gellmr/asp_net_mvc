@@ -9,5 +9,6 @@ namespace gellmvc.Models
     public IEnumerable<ProductLine> ProductLines { get; set; }
     public PagingInfo PagingInfo { get; set; }
     public Cart Cart { get; set; }
+    public string SearchString { get; set; }
   }
 }
