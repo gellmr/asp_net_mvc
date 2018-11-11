@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      @* Pagination top *@
+      @* Pagination top --- PLEASE IMPLEMENT THIS   http://jasonwatmore.com/post/2015/10/30/aspnet-mvc-pagination-example-with-logic-like-google    *@
       <div class="row">
         <div class="col-xs-12">
           <div class="text-center">
@@ -50,28 +50,28 @@
         }
       </form>
 
-      @* Pagination bottom 
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="text-center">
-            Page: @Model.PagingInfo.CurrentPage of @Model.PagingInfo.TotalPages
-          </div>
+      @* Pagination bottom
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="text-center">
+          Page: @Model.PagingInfo.CurrentPage of @Model.PagingInfo.TotalPages
         </div>
-      </div>*@
+      </div>
+    </div>*@
 
       @* Go to cart button
-      <div class="row">
-        <div class="col-md-12">
-          <div class="text-center">
-            @Html.ActionLink("Go to Cart",
-                "Index", // method
-                "Cart",  // controller
-                null,    // route arguments
-                new { @class = "btn btn-default go-next-btn" } // html arguments
-            )
-          </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="text-center">
+          @Html.ActionLink("Go to Cart",
+              "Index", // method
+              "Cart",  // controller
+              null,    // route arguments
+              new { @class = "btn btn-default go-next-btn" } // html arguments
+          )
         </div>
-      </div>*@
+      </div>
+    </div>*@
 
     </div>
   </div>
