@@ -49,7 +49,7 @@
           <div class="row content-header-row">
             <div class="col-xs-6">
               <div class="row">
-                <a href="@Model.ReturnUrl" class="btn btn-default content-header-btn">Back To Store</a>
+                <a href="/Store/Index" class="btn btn-default content-header-btn">Back To Store</a>
               </div>
             </div>
             <div class="col-xs-6">
@@ -66,7 +66,7 @@
             </div>
           </div>
 
-          foreach (var line in Model.Cart.Lines)
+          foreach (var line in Model.ProductLines)
           {
             
             @Html.Partial("~/Views/Partials/Shopping/_ForSaleProductLine.cshtml", line)

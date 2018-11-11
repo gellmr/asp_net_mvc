@@ -3,6 +3,8 @@ using System.Web.Mvc;
 using gellmvc.Domain.Abstract;
 using gellmvc.Domain.Entities;
 using gellmvc.Models;
+using System.Collections.Generic;
+using static gellmvc.Domain.Entities.Cart;
 
 namespace gellmvc.Controllers
 {
@@ -31,14 +33,36 @@ namespace gellmvc.Controllers
       return RedirectToAction("Index");
     }
 
-
-    public ViewResult Index(Cart cart, string returnUrl)
+    private CartIndexViewModel LookUpProducts(Cart cart)
     {
-      return View(new CartIndexViewModel
+      List<ProductLine> productLines = new List<ProductLine>();
+      
+      foreach (CartLine cartLine in cart.Lines)
       {
-        Cart = cart,
-        ReturnUrl = returnUrl
-      });
+        // Look up the product
+        Product product = repository.Products.FirstOrDefault(p => p.Id == cartLine.Product.Id);
+        int qty = cartLine.Quantity;
+        productLines.Add(new ProductLine
+        {
+          Product = product,
+          QtyInCart = qty,
+          Subtotal = qty * product.UnitPrice
+        });
+      }
+
+      // Construct the view model
+      CartIndexViewModel viewModel = new CartIndexViewModel
+      {
+        ProductLines = productLines,
+        Cart = cart
+      };
+
+      return viewModel;
+    }
+
+    public ViewResult Index(Cart cart)
+    {
+      return View(LookUpProducts(cart));
     }
 
     [HttpPut]

@@ -6,9 +6,10 @@ using gellmvc.Domain.Entities;
 
 namespace gellmvc.Models
 {
-  public class CartIndexViewModel {
+  public class CartIndexViewModel
+  {
+    public IEnumerable<ProductLine> ProductLines { get; set; }
     public Cart Cart { get; set; }
-    public string ReturnUrl { get; set; }
   }
 
   public class CartUpdate
