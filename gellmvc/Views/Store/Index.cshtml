@@ -15,25 +15,30 @@
         </div>
       </div>
 
-      @* Search Products 
+      @* Search Products *@
       <div class="row">
         <div class="col-sm-12" id="product-search-div">
           <div class="input-group product-search-group">
             <!-- Search input-->
-            @Html.TextBox("product-search-input", "", new { @class = "form-control product-search-control" })
+
+            <input type="search" class="form-control product-search-control" id="product-search-input" name="product-search-input" />
 
             <!-- Search button -->
             <span class="input-group-btn">
-              <a class="btn btn-default product-search-control" href="@Url.Action("store", "search", new { @searchString = "blah"})" name="product-search-button" type="button">
+
+              <a href="@Url.Action("Search", "Store", new { @searchString = ""})" id="product-search-button" class="btn btn-default product-search-control" name="product-search-button" type="button">
+
                 <span class="glyphicon glyphicon-search"></span>
+
                 Search
               </a>
+
             </span>
           </div>
         </div>
-      </div>*@
+      </div>
 
-      @* Pagination top 
+      @* Pagination top *@
       <div class="row">
         <div class="col-xs-12">
           <div class="text-center">
@@ -41,7 +46,7 @@
           </div>
         </div>
       </div>
-      <hr class="narrow-hr short-hr-margin" />*@
+      <hr class="narrow-hr short-hr-margin" />
 
       @* Products *@
       <form role="form">

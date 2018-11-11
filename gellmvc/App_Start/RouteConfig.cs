@@ -22,7 +22,7 @@ namespace gellmvc
       routes.MapRoute(
         name: "Default",
         url: "{controller}/{action}/{id}",
-        defaults: new { controller = "Store", action = "Index", id = UrlParameter.Optional }
+        defaults: new { controller = "Store", action = "Search", id = UrlParameter.Optional }
       );
     }
   }

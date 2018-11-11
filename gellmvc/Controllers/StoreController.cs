@@ -16,17 +16,34 @@ namespace gellmvc.Controllers
       this.repository = productRepository;
     }
 
-    // GET: /Store/Index
-    public ViewResult Index(Cart cart, int page = 1)
+    private StoreListViewModel GetPageOfProducts(Cart cart, int page = 1, string searchString = "")
     {
-      List<ProductLine> productLines = new List<ProductLine>();
+      searchString = searchString.ToLower();
 
-      IEnumerable<Product> allProducts = repository.Products
-        .OrderBy(p => p.Id)
-        .Skip((page - 1) * PageSize)
-        .Take(PageSize);
-      
-      foreach (Product product in allProducts)
+      List<ProductLine> productLines = new List<ProductLine>();
+      IEnumerable<Product> pageOfProducts;
+
+      // Get a page of products from the repository
+      if (searchString.Length == 0)
+      {
+        // no search string
+        pageOfProducts = repository.Products
+          .OrderBy(p => p.Id)
+          .Skip((page - 1) * PageSize)
+          .Take(PageSize);
+      }
+      else
+      {
+        // search string
+        pageOfProducts = repository.Products
+          .Where(p => p.Name.ToLower().Contains(searchString) || p.Description.ToLower().Contains(searchString))
+          .OrderBy(p => p.Id)
+          .Skip((page - 1) * PageSize)
+          .Take(PageSize);
+      }
+
+      // Update each line according to how many are currently in the cart.
+      foreach (Product product in pageOfProducts)
       {
         int qty = cart.GetQuantity(product);
         productLines.Add(new ProductLine
@@ -36,8 +53,9 @@ namespace gellmvc.Controllers
           Subtotal = qty * product.UnitPrice
         });
       }
-      
-      StoreListViewModel model = new StoreListViewModel
+
+      // Construct the view model
+      StoreListViewModel viewModel = new StoreListViewModel
       {
         ProductLines = productLines,
         PagingInfo = new PagingInfo
@@ -48,7 +66,15 @@ namespace gellmvc.Controllers
         },
         Cart = cart
       };
-      return View(model);
+
+      return viewModel;
+    }
+
+    // GET: /Store/Search
+    public ViewResult Search(Cart cart, int page = 1, string searchString = "")
+    {
+      StoreListViewModel model = GetPageOfProducts(cart, page, searchString);
+      return View("Index", model);
     }
   }
 }

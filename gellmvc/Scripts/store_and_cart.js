@@ -213,6 +213,24 @@
     });
   };
 
+  var searchInputCheckIfReturnPressed = function (event) {
+    event.preventDefault();
+    if (event.which === 13) {
+      console.log("Submit Search");
+      productSearchButtonClicked();
+      window.location.replace($('a#product-search-button').attr('href'));
+    }
+    else {
+      console.log("key " + event.which);
+    }
+  }
+
+  var productSearchButtonClicked = function (event) {
+    var searchString = $('#product-search-input').val();
+    console.log("Search for products like '" + searchString + "'");
+    $('a#product-search-button').attr('href', "/Store/Search?searchString=" + searchString);
+  }
+
   var storeAndCartReadyJs = function (e) {
 
     $('div.top-level-container').on(
@@ -228,6 +246,17 @@
       'click',
       'button.qty-btn-plus, button.qty-btn-minus',
       quantityUpdateButton
+    );
+
+    $('div#product-search-div').on(
+      'keyup',
+      '#product-search-input',
+      searchInputCheckIfReturnPressed
+    );
+
+    $('a#product-search-button').on(
+      'click',
+      productSearchButtonClicked
     );
 
     var result = $('div.top-level-container').on(
