@@ -14,16 +14,6 @@ namespace gellmvc.Controllers
       repository = repo;
     }
 
-    //public RedirectToRouteResult AddToCart(Cart cart, int Id, string returnUrl)
-    //{
-    //  Product product = repository.Products.FirstOrDefault(p => p.Id == Id);
-
-    //  if (product != null) {
-    //    cart.AddItem(product, 1);
-    //  }
-    //  return RedirectToAction("Index", new { returnUrl });
-    //}
-
     public RedirectToRouteResult RemoveFromCart(Cart cart, int Id, string returnUrl)
     {
       Product product = repository.Products.FirstOrDefault(p => p.Id == Id);
