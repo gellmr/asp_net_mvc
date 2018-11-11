@@ -231,6 +231,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PagingInfo.cs" />
+    <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\StoreListViewModel.cs" />
     <Compile Include="Models\ProductsListViewModel.cs" />
     <Compile Include="Models\ShoppingViewModels.cs" />
@@ -301,9 +302,11 @@
     <Content Include="Views\Shared\ProductSummary.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Partials\Shopping\_SummaryRow.cshtml" />
+    <Content Include="Views\Partials\Shopping\_Pager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="HtmlHelpers\" />
     <Folder Include="Views\Partials\Shopping\Store\" />
   </ItemGroup>
   <ItemGroup>

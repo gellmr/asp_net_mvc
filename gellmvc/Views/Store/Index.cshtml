@@ -32,14 +32,15 @@
         </div>
       </div>
 
-      @* Pagination top --- PLEASE IMPLEMENT THIS   http://jasonwatmore.com/post/2015/10/30/aspnet-mvc-pagination-example-with-logic-like-google    *@
+      @* Pagination top *@
       <div class="row">
         <div class="col-xs-12">
           <div class="text-center">
-            Page: @Model.PagingInfo.CurrentPage of @Model.PagingInfo.TotalPages
+            @Html.Partial("~/Views/Partials/Shopping/_Pager.cshtml")
           </div>
         </div>
       </div>
+
       <hr class="narrow-hr short-hr-margin" />
 
       @* Products *@
@@ -50,14 +51,14 @@
         }
       </form>
 
-      @* Pagination bottom
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="text-center">
-          Page: @Model.PagingInfo.CurrentPage of @Model.PagingInfo.TotalPages
+      @* Pagination bottom *@
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="text-center">
+            @Html.Partial("~/Views/Partials/Shopping/_Pager.cshtml")
+          </div>
         </div>
       </div>
-    </div>*@
 
       @* Go to cart button
     <div class="row">
@@ -74,5 +75,5 @@
     </div>*@
 
     </div>
-  </div>
-</div>
+        </div>
+      </div>

@@ -20,29 +20,23 @@ namespace gellmvc.Controllers
     {
       searchString = searchString.ToLower();
 
-      List<ProductLine> productLines = new List<ProductLine>();
       IEnumerable<Product> pageOfProducts;
+      List<ProductLine> productLines = new List<ProductLine>();
 
-      // Get a page of products from the repository
-      if (searchString.Length == 0)
-      {
-        // no search string
-        pageOfProducts = repository.Products
-          .OrderBy(p => p.Id)
-          .Skip((page - 1) * PageSize)
-          .Take(PageSize);
-      }
-      else
-      {
-        // search string
-        pageOfProducts = repository.Products
-          .Where(p => p.Name.ToLower().Contains(searchString) || p.Description.ToLower().Contains(searchString))
-          .OrderBy(p => p.Id)
-          .Skip((page - 1) * PageSize)
-          .Take(PageSize);
-      }
+      // Get the requested page of products from the repository.
+      // If we have a searchstring then use it, and also pagination.
+      // Otherwise just use pagination.
 
-      // Update each line according to how many are currently in the cart.
+      pageOfProducts = repository.Products
+        .Where(p => (searchString.Length > 0) ? (p.Name.ToLower().Contains(searchString) || p.Description.ToLower().Contains(searchString)) : true)
+        .OrderBy(p => p.Id)
+        .Skip((page - 1) * PageSize)
+        .Take(PageSize);
+
+      // pageOfProducts now contains the requested page of products.
+      // We will not display pageOfProducts, but we will use it to build a list of product lines, and display that.
+      // productLines tells us how many of each item are in the user's cart.
+
       foreach (Product product in pageOfProducts)
       {
         int qty = cart.GetQuantity(product);
@@ -53,17 +47,12 @@ namespace gellmvc.Controllers
           Subtotal = qty * product.UnitPrice
         });
       }
-
+      
       // Construct the view model
       StoreListViewModel viewModel = new StoreListViewModel
       {
         ProductLines = productLines,
-        PagingInfo = new PagingInfo
-        {
-          CurrentPage = page,
-          ItemsPerPage = PageSize,
-          TotalItems = repository.Products.Count()
-        },
+        Pager = new Pager(repository.Products.Count(), page, PageSize),
         Cart = cart,
         SearchString = searchString
       };

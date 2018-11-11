@@ -25,11 +25,7 @@ namespace gellmvc.Controllers
         Products = repository.Products.OrderBy(p => p.Id)
           .Skip((page - 1) * PageSize)
           .Take(PageSize),
-          PagingInfo = new PagingInfo {
-            CurrentPage = page,
-            ItemsPerPage = PageSize,
-            TotalItems = repository.Products.Count()
-          }
+          Pager = new Pager(repository.Products.Count(), page, PageSize)
       };
       return View(model);
     }

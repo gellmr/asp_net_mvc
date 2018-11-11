@@ -20,6 +20,12 @@ namespace gellmvc
       );
 
       routes.MapRoute(
+        name: null,
+        url: "Store/Index",
+        defaults: new { Controller = "Store", action = "Search" }
+      );
+
+      routes.MapRoute(
         name: "Default",
         url: "{controller}/{action}/{id}",
         defaults: new { controller = "Store", action = "Search", id = UrlParameter.Optional }
