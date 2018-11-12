@@ -41,8 +41,9 @@
 
         @if (Model.Cart.Lines.Count() == 0)
         {
-          <span>Page Go Back</span>
-          <!-- render "partials/pageGoBack", {goback_message: "Your cart is empty!", goback_btn_text:"Go back to Store", goback_btn_path: store_index_path} -->
+          @* need to center this or something *@
+          @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
+          <hr />
         }
         else
         {
@@ -51,7 +52,7 @@
           <div class="row content-header-row">
             <div class="col-xs-6">
               <div class="row">
-                <a href="/Store/Index" class="btn btn-default content-header-btn">Back To Store</a>
+                @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
               </div>
             </div>
 

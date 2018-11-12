@@ -1,6 +1,7 @@
 ﻿@model gellmvc.Models.CartIndexViewModel
 @{
   ViewBag.Title = "Checkout";
+  var cartEmpty = (Model.Cart.Lines.Count() == 0);
 }
 
 @using (Html.BeginForm("Submit", "Checkout"))
@@ -21,20 +22,32 @@
           <div class="text-center">
             <h3 class="content-heading">
               <img src="~/Content/images/cartLogo.png" alt="Cart Logo" />
-              <span>Checkout</span>
+              @if (cartEmpty)
+              {
+                <span>Cannot Checkout!</span>
+              }
+              else
+              {
+                <span>Checkout</span>
+              }
             </h3>
           </div>
         </div>
       </div>
 
-      @if (Model.Cart.Lines.Count() == 0)
+      @if (cartEmpty)
       {
-        <span>Page Go Back</span>
+        <h4 class="text-center">...Your cart is empty.</h4>
+        @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
+        <hr />
       }
       else
       {
-        <h4>In Your Cart...</h4>
-        <br />
+        @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
+        @Html.Partial("~/Views/Partials/Shopping/_BackToCart.cshtml")
+        <a href="/Checkout/Index" class="btn btn-default content-header-btn" disabled="disabled">Reviewing Your Order...</a>
+        <hr />
+        <div style="height: 50px;"></div>
 
         @Html.Partial("~/Views/Partials/Shopping/Checkout/_CheckoutSummary.cshtml", Model)
 
