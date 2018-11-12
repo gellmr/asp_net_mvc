@@ -292,17 +292,17 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Store\Index.cshtml" />
-    <Content Include="Views\Partials\Shopping\_ForSaleProductLine.cshtml" />
-    <Content Include="Views\Partials\Shopping\Cart\_InputQtyToOrder.cshtml" />
+    <Content Include="Views\Partials\Shopping\Store\_InputQtyToOrder.cshtml" />
     <Content Include="Views\Partials\Shopping\_x_btn_remove_from_cart.cshtml" />
     <Content Include="Views\Shared\ProductSummary.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Partials\Shopping\_SummaryRow.cshtml" />
     <Content Include="Views\Partials\Shopping\_Pager.cshtml" />
+    <Content Include="Views\Partials\Shopping\Store\_ProductLine.cshtml" />
+    <Content Include="Views\Partials\Shopping\Cart\_CartLine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Partials\Shopping\Store\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
