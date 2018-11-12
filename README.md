@@ -22,7 +22,7 @@ Copy this whole thing and paste into cmd. Execute this command
 to install chocolatey.
 
 Chocolatey is like apt-get on Linux, it allows you to quickly
-install huge dependency chains with a single command. Yay!
+install huge dependency chains with a single command.
 
 Next we will use chocolatey to install git.  
 choco install git -params '"/GitAndUnixToolsOnPath"'
