@@ -5,6 +5,8 @@
 
 @using (Html.BeginForm("Submit", "Checkout"))
 {
+  <input type="hidden" id="page-location" name="page-location" value="checkout">
+
   <div class="row">
     <div class="col-xs-12">
 
@@ -35,7 +37,7 @@
         <br />
 
         @Html.Partial("~/Views/Partials/Shopping/Checkout/_CheckoutSummary.cshtml", Model)
-        
+
         @* Customer address selection will go here *@
 
         <div class="row">

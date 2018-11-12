@@ -5,6 +5,8 @@
 
 @using (Html.BeginForm("SubmitCart", "Cart"))
 {
+  <input type="hidden" id="page-location" name="page-location" value="cart">
+
   <div class="row">
     <div class="col-xs-12">
       <div class="centeredProducts">
@@ -74,20 +76,20 @@
 
           if (Model.Cart.Lines.Count() > 0)
           {
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="text-center">
-                <h3>
-                  @Html.ActionLink("Proceed to checkout",
-                    "Index",     // method
-                    "Checkout",  // controller
-                    null,        // route arguments
-                    new { @class = "btn btn-default cart-submit-btn" } // html arguments
-                  )
-                </h3>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="text-center">
+                  <h3>
+                    @Html.ActionLink("Proceed to checkout",
+                      "Index",     // method
+                      "Checkout",  // controller
+                      null,        // route arguments
+                      new { @class = "btn btn-default cart-submit-btn" } // html arguments
+                    )
+                  </h3>
+                </div>
               </div>
             </div>
-          </div>
           }
 
         }

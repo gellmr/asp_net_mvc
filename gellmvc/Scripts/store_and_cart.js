@@ -17,6 +17,10 @@
     return inputElement;
   }
 
+  var pageLocation = function () {
+    return $("#page-location").val();
+  }
+
   var quantityUpdateButton = function (event) {
     if (event) {
       var buttonElement = $(event.currentTarget);
@@ -137,8 +141,7 @@
               parentalDiv.find('.inCartIcon').hide();
               liBtnRemFromCart.addClass("disabled");
               inputElement.val(0);
-              var page = document.URL.split('/').pop().split('?').shift();
-              if (page == "cart") {
+              if (pageLocation() == "cart") {
                 wellDiv.remove();
               }
               $('.cart-submit-btn').trigger('check-if-no-products');
