@@ -7,84 +7,54 @@
 {
   <div class="row">
     <div class="col-xs-12">
-      <div class="centeredProducts">
 
-        <div class="alert alert-warning" id="serverError" style="display:none;">
-          There was a server error.
-        </div>
+      <div class="alert alert-warning" id="serverError" style="display:none;">
+        There was a server error.
+      </div>
 
-        <!-- render partials/flash message -->
-        <div class="row">
-          <div class="col-sm-12 hidden-xs">
-            <div class="text-center">
-              <h3 class="content-heading">
-                <img src="~/Content/images/cartLogo.png" alt="Cart Logo" />
-                <span>Checkout</span>
-              </h3>
-            </div>
-          </div>
-          <div class="col-xs-12 visible-xs">
-            <div class="row">
-              <div class="col-xs-5" style='margin-top:15px'>
-                <img src="~/Content/images/cartLogo.png" alt="Cart Logo" />
-              </div>
-              <div class="col-xs-7">
-                <h3 class="content-heading">
-                  Checkout
-                </h3>
-              </div>
-            </div>
+      <!-- render partials/flash message -->
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-center">
+            <h3 class="content-heading">
+              <img src="~/Content/images/cartLogo.png" alt="Cart Logo" />
+              <span>Checkout</span>
+            </h3>
           </div>
         </div>
+      </div>
 
+      @if (Model.Cart.Lines.Count() == 0)
+      {
+        <span>Page Go Back</span>
+      }
+      else
+      {
         <h4>In Your Cart...</h4>
         <br />
 
-        @if (Model.Cart.Lines.Count() == 0)
-        {
-          <span>Page Go Back</span>
-        }
-        else
-        {
+        @Html.Partial("~/Views/Partials/Shopping/Checkout/_CheckoutSummary.cshtml", Model)
+        
+        @* Customer address selection will go here *@
 
-          //cart has items
-          <div class="row content-header-row">
-            <div class="col-xs-6">
-              <div class="row">
-                <a href="/Cart/Index" class="btn btn-default content-header-btn">Back To Cart</a>
-              </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="text-center">
+              @Html.ActionLink("Place Order",
+                "Submit",    // method
+                "Checkout",  // controller
+                null,        // route arguments
+                new {
+                  @class = "btn btn-default go-next-btn",
+                  @type = "submit"
+                }
+              )
             </div>
           </div>
+        </div>
 
-          foreach (var line in Model.ProductLines)
-          {
-            @Html.Partial("~/Views/Partials/Shopping/Checkout/_CheckoutLine.cshtml", line)
-          }
-
-          @Html.Partial("~/Views/Partials/Shopping/Checkout/_SummaryRow.cshtml")
-
-          if (Model.Cart.Lines.Count() > 0)
-          {
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="text-center">
-                  @Html.ActionLink("Place Order",
-                    "Submit",    // method
-                    "Checkout",  // controller
-                    null,        // route arguments
-                    new {
-                      @class = "btn btn-default go-next-btn",
-                      @type = "submit",
-                      @name = "commit"
-                    }
-                  )
-                </div>
-              </div>
-            </div>
-          }
-
-        }
-      </div>
+      }
     </div>
   </div>
 }

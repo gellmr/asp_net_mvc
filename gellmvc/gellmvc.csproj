@@ -304,8 +304,8 @@
     <Content Include="Views\Partials\Shopping\Cart\_CartLine.cshtml" />
     <Content Include="Views\Partials\Shopping\Cart\_InputQtyToOrder.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
-    <Content Include="Views\Partials\Shopping\Checkout\_CheckoutLine.cshtml" />
-    <Content Include="Views\Partials\Shopping\Checkout\_SummaryRow.cshtml" />
+    <Content Include="Views\Partials\Shopping\Checkout\_CheckoutSummary.cshtml" />
+    <Content Include="Views\Partials\Shopping\Checkout\_CheckoutSummaryRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
