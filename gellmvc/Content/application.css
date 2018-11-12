@@ -5814,26 +5814,115 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
-/*--------------------------------------------------------------------------------------------
-Content of auth.css
-*/
-form.authForm {
-  min-width: 180px;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto; }
+/* --------------------------------------------------------------------------------------------
+Content of gellmvc/scss/application.scss
 
+My .scss files from "gellmvc/scss/include" are included below.
+Grunt is used to compile the bootstrap .scss files (located in bower_components) together with my .scss
+The resulting compiled .css file (application.css) is placed in gellmvc/Content/application.css */
 /*--------------------------------------------------------------------------------------------
 Content of body.css
 */
+/* override the bootstrap fonts path */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url("/Content/fonts/bootstrap//glyphicons-halflings-regular.eot");
+  src: url("/Content/fonts/bootstrap//glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("/Content/fonts/bootstrap//glyphicons-halflings-regular.woff") format("woff"), url("/Content/fonts/bootstrap//glyphicons-halflings-regular.ttf") format("truetype"), url("/Content/fonts/bootstrap//glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+
 body {
-  min-width: 130px; }
+  min-width: 130px;
+  padding-top: 50px;
+  padding-bottom: 20px; }
 
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
   margin-right: 0; }
 
 .top-level-container {
   width: 80%;
+  margin-left: auto;
+  margin-right: auto; }
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+  padding-left: 15px;
+  padding-right: 15px; }
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+  white-space: normal; }
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+  max-width: 280px; }
+
+.go-next-btn {
+  font-size: 2.0em; }
+
+div.product-search-group {
+  max-width: 245px;
+  margin-left: auto;
+  margin-right: auto; }
+
+.product-search-control {
+  height: 38px; }
+
+input.product-search-control {
+  text-align: center; }
+
+.short-hr-margin {
+  margin-top: 5px;
+  margin-bottom: 5px; }
+
+.well.transparentBackground {
+  background-color: transparent;
+  margin-bottom: 3px;
+  border-top-style: none; }
+  @media screen and (min-width: 768px) {
+    .well.transparentBackground {
+      border-top-style: none;
+      border-left-style: none;
+      border-right-style: none; } }
+
+.current {
+  background-color: #cecece; }
+
+nav.pagination a.btn {
+  font-size: 10px; }
+
+.feint {
+  color: rgba(39, 39, 39, 0.68); }
+
+.very-feint {
+  color: #c8c8c8; }
+
+div.breakpoint-text .tiny-font {
+  font-size: 14px; }
+  @media screen and (max-width: 430px) {
+    div.breakpoint-text .tiny-font {
+      font-size: 11px; } }
+  @media screen and (max-width: 345px) {
+    div.breakpoint-text .tiny-font {
+      font-size: 9px; } }
+
+.well.customerwell {
+  background-color: #97CC97; }
+
+.well.staffwell {
+  background-color: #f3853b; }
+
+.well.adminwell {
+  background-color: #C54B48; }
+
+/*--------------------------------------------------------------------------------------------
+Content of auth.css
+*/
+form.authForm {
+  min-width: 180px;
+  max-width: 400px;
   margin-left: auto;
   margin-right: auto; }
 
@@ -6153,59 +6242,3 @@ Content of users.scss
 
 .showme {
   border: 1px solid rgba(255, 12, 12, 0.11); }
-
-/* --------------------------------------------------------------------------------------------
-Content of gellmvc/scss/application.scss
-
-My .scss files from "gellmvc/scss/include" are included above.
-Grunt is used to compile the bootstrap .scss files (located in bower_components) together with my .scss
-The resulting compiled .css file (application.css) is placed in gellmvc/Content/application.css
-*/
-body {
-  padding-top: 50px;
-  padding-bottom: 20px; }
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-  padding-left: 15px;
-  padding-right: 15px; }
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-  white-space: normal; }
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-  max-width: 280px; }
-
-.go-next-btn {
-  font-size: 2.0em; }
-
-div.product-search-group {
-  max-width: 245px;
-  margin-left: auto;
-  margin-right: auto; }
-
-.product-search-control {
-  height: 38px; }
-
-input.product-search-control {
-  text-align: center; }
-
-.short-hr-margin {
-  margin-top: 5px;
-  margin-bottom: 5px; }
-
-.well.transparentBackground {
-  background-color: transparent;
-  margin-bottom: 3px;
-  border-top-style: none; }
-  @media screen and (min-width: 768px) {
-    .well.transparentBackground {
-      border-top-style: none;
-      border-left-style: none;
-      border-right-style: none; } }

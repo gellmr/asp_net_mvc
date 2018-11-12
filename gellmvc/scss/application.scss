@@ -1,8 +1,15 @@
 ﻿$icon-font-path: "/Content/fonts/bootstrap/"; // override the bootstrap fonts path.
 @import "bootstrap";
 
-@import "auth";
+/* --------------------------------------------------------------------------------------------
+Content of gellmvc/scss/application.scss
+
+My .scss files from "gellmvc/scss/include" are included below.
+Grunt is used to compile the bootstrap .scss files (located in bower_components) together with my .scss
+The resulting compiled .css file (application.css) is placed in gellmvc/Content/application.css */
+
 @import "body";
+@import "auth";
 @import "cart";
 @import "checkout";
 @import "home";
@@ -13,72 +20,3 @@
 @import "store";
 @import "store_and_cart";
 @import "users";
-
-
-/* --------------------------------------------------------------------------------------------
-Content of gellmvc/scss/application.scss
-
-My .scss files from "gellmvc/scss/include" are included above.
-Grunt is used to compile the bootstrap .scss files (located in bower_components) together with my .scss
-The resulting compiled .css file (application.css) is placed in gellmvc/Content/application.css
-*/
-
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
-.go-next-btn {
-    font-size: 2.0em;
-}
-
-div.product-search-group {
-  max-width: 245px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.product-search-control {
-  height: 38px;
-}
-
-input.product-search-control {
-  text-align: center;
-}
-
-.short-hr-margin{
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.well.transparentBackground {
-  background-color: transparent;
-  margin-bottom: 3px;
-  border-top-style: none;
-
-  @media screen and (min-width: 768px) {
-    border-top-style: none;
-    border-left-style: none;
-    border-right-style: none;
-  }
-}
