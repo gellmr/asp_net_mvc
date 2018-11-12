@@ -14,7 +14,8 @@ module.exports = function (grunt) {
         sass: {
             options: {
                 // bootstrap SCSS files to use with @import.
-                includePaths: ['bower_components/bootstrap-sass/assets/stylesheets']
+                // An array of paths that LibSass can look in to attempt to resolve your @import declarations.
+                includePaths: ['bower_components/bootstrap-sass/assets/stylesheets', 'gellmvc/scss/include']
             },
             dist: {
                 options: {
@@ -22,7 +23,7 @@ module.exports = function (grunt) {
                 },
                 // the file that i want to compile. eg, 'dist/compiled.css' : 'scss/source.scss'
                 files: {
-                    'gellmvc/Content/site.css': 'gellmvc/scss/site.scss'
+                    'gellmvc/Content/application.css': 'gellmvc/scss/application.scss'
                 }
             }
         },
