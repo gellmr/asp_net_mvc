@@ -5860,7 +5860,8 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 input,
 select,
 textarea {
-  max-width: 280px; }
+  /* Disabled because it was separating our nice components on the store page.*/
+  /*max-width: 280px;*/ }
 
 .go-next-btn {
   font-size: 2.0em; }
