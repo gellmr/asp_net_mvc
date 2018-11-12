@@ -37,16 +37,23 @@
 
       @if (cartEmpty)
       {
-        <h4 class="text-center">...Your cart is empty.</h4>
-        @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
-        <hr />
+        <div class="row">
+          <hr />
+          <h4 class="text-center">...Your cart is empty.</h4>
+          @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
+          <hr />
+        </div>
       }
       else
       {
-        @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
-        @Html.Partial("~/Views/Partials/Shopping/_BackToCart.cshtml")
-        <a href="/Checkout/Index" class="btn btn-default content-header-btn" disabled="disabled">Reviewing Your Order...</a>
-        <hr />
+        <div class="row">
+          <hr />
+          @Html.Partial("~/Views/Partials/Shopping/_BackToStore.cshtml")
+          @Html.Partial("~/Views/Partials/Shopping/_BackToCart.cshtml")
+          <a href="/Checkout/Index" class="btn btn-default content-header-btn" disabled="disabled">Reviewing Your Order...</a>
+          <hr />
+        </div>
+
         <div style="height: 50px;"></div>
 
         @Html.Partial("~/Views/Partials/Shopping/Checkout/_CheckoutSummary.cshtml", Model)
