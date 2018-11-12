@@ -306,6 +306,8 @@
     <Content Include="Views\Checkout\Index.cshtml" />
     <Content Include="Views\Partials\Shopping\Checkout\_CheckoutSummary.cshtml" />
     <Content Include="Views\Partials\Shopping\Checkout\_CheckoutSummaryRow.cshtml" />
+    <Content Include="Views\Partials\Shopping\_BackToStore.cshtml" />
+    <Content Include="Views\Partials\Shopping\_BackToCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
