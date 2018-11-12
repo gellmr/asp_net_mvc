@@ -116,15 +116,15 @@ grunt
 
 This will run the grunt tasks 'clean', 'copy', and 'sass'
 
-Which will delete everything in gellmvc\dist
+Which will delete everything in gellmvc\Content
 
 And it will copy all the important deployable assets to  
-gellmvc\dist
+gellmvc\Content
 
 (all the stuff that eventually gets deployed to azure)
 
 And it will run the sass conversion task, turning our sass
-files into one compiled css file "gellmvc\dist\site.css"
+files into one compiled css file "gellmvc\Content\site.css"
 
 Now we are ready to deploy these files to azure.
 
