@@ -129,7 +129,7 @@
           var cartTotalItems = jqXHR.getResponseHeader('cartTotalItems');
           var cartTotalLines = jqXHR.getResponseHeader('cartTotalLines');
           var message = jqXHR.getResponseHeader('message');
-          $("h3.content-heading span").html("My Cart: " + cartTotalLines + " Lines");
+          $("span#my-cart-n-lines").html("My Cart: " + cartTotalLines + " Lines");
           $("input.total-items").val(cartTotalItems);
           $("input.grand-total").val('$ ' + resultGrandTot);
           console.log("message:" + message + " result:" + result);
