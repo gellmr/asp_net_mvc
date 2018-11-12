@@ -1,9 +1,9 @@
 ﻿@model gellmvc.Models.CartIndexViewModel
 @{
-  ViewBag.Title = "Your Cart";
+  ViewBag.Title = "Checkout";
 }
 
-@using (Html.BeginForm("SubmitCart", "Cart"))
+@using (Html.BeginForm("Submit", "Checkout"))
 {
   <div class="row">
     <div class="col-xs-12">
@@ -19,7 +19,7 @@
             <div class="text-center">
               <h3 class="content-heading">
                 <img src="~/Content/images/cartLogo.png" alt="Cart Logo" />
-                <span>My Cart: @Model.Cart.Lines.Count() Lines </span>
+                <span>Checkout</span>
               </h3>
             </div>
           </div>
@@ -30,17 +30,19 @@
               </div>
               <div class="col-xs-7">
                 <h3 class="content-heading">
-                  My Cart: @Model.Cart.Lines.Count() Lines
+                  Checkout
                 </h3>
               </div>
             </div>
           </div>
         </div>
 
+        <h4>In Your Cart...</h4>
+        <br />
+
         @if (Model.Cart.Lines.Count() == 0)
         {
           <span>Page Go Back</span>
-          <!-- render "partials/pageGoBack", {goback_message: "Your cart is empty!", goback_btn_text:"Go back to Store", goback_btn_path: store_index_path} -->
         }
         else
         {
@@ -49,45 +51,36 @@
           <div class="row content-header-row">
             <div class="col-xs-6">
               <div class="row">
-                <a href="/Store/Index" class="btn btn-default content-header-btn">Back To Store</a>
-              </div>
-            </div>
-
-            <div class="col-xs-6">
-              <div class="row">
-                <div class="pull-right">
-                  @Html.ActionLink("Clear My Cart", "ClearCart", "Cart", new {
-                    @id = "clearMyCartBtn",
-                    @class = (Model.Cart.Lines.Count() > 0) ? "btn btn-default content-header-btn" : "btn btn-default content-header-btn disabled"
-                  })
-                </div>
+                <a href="/Cart/Index" class="btn btn-default content-header-btn">Back To Cart</a>
               </div>
             </div>
           </div>
 
           foreach (var line in Model.ProductLines)
           {
-            @Html.Partial("~/Views/Partials/Shopping/Cart/_CartLine.cshtml", line)
+            @Html.Partial("~/Views/Partials/Shopping/Checkout/_CheckoutLine.cshtml", line)
           }
 
-          @Html.Partial("~/Views/Partials/Shopping/_SummaryRow.cshtml")
+          @Html.Partial("~/Views/Partials/Shopping/Checkout/_SummaryRow.cshtml")
 
           if (Model.Cart.Lines.Count() > 0)
           {
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="text-center">
-                <h3>
-                  @Html.ActionLink("Proceed to checkout",
-                    "Index",     // method
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="text-center">
+                  @Html.ActionLink("Place Order",
+                    "Submit",    // method
                     "Checkout",  // controller
                     null,        // route arguments
-                    new { @class = "btn btn-default cart-submit-btn" } // html arguments
+                    new {
+                      @class = "btn btn-default go-next-btn",
+                      @type = "submit",
+                      @name = "commit"
+                    }
                   )
-                </h3>
+                </div>
               </div>
             </div>
-          </div>
           }
 
         }

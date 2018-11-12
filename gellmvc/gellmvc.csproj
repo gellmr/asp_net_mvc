@@ -214,7 +214,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartBaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -300,9 +302,14 @@
     <Content Include="Views\Partials\Shopping\_Pager.cshtml" />
     <Content Include="Views\Partials\Shopping\Store\_ProductLine.cshtml" />
     <Content Include="Views\Partials\Shopping\Cart\_CartLine.cshtml" />
+    <Content Include="Views\Partials\Shopping\Cart\_InputQtyToOrder.cshtml" />
+    <Content Include="Views\Checkout\Index.cshtml" />
+    <Content Include="Views\Partials\Shopping\Checkout\_CheckoutLine.cshtml" />
+    <Content Include="Views\Partials\Shopping\Checkout\_SummaryRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\CartBase\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

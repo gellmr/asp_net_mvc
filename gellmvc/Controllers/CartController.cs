@@ -3,18 +3,12 @@ using System.Web.Mvc;
 using gellmvc.Domain.Abstract;
 using gellmvc.Domain.Entities;
 using gellmvc.Models;
-using System.Collections.Generic;
-using static gellmvc.Domain.Entities.Cart;
 
 namespace gellmvc.Controllers
 {
-  public class CartController : Controller
+  public class CartController : CartBaseController
   {
-    private IProductRepository repository;
-
-    public CartController(IProductRepository repo) {
-      repository = repo;
-    }
+    public CartController(IProductRepository repo) : base (repo) {}
 
     public RedirectToRouteResult RemoveFromCart(Cart cart, int Id, string returnUrl)
     {
@@ -31,33 +25,6 @@ namespace gellmvc.Controllers
     {
       cart.Clear();
       return RedirectToAction("Index");
-    }
-
-    private CartIndexViewModel LookUpProducts(Cart cart)
-    {
-      List<ProductLine> productLines = new List<ProductLine>();
-      
-      foreach (CartLine cartLine in cart.Lines)
-      {
-        // Look up the product
-        Product product = repository.Products.FirstOrDefault(p => p.Id == cartLine.Product.Id);
-        int qty = cartLine.Quantity;
-        productLines.Add(new ProductLine
-        {
-          Product = product,
-          QtyInCart = qty,
-          Subtotal = qty * product.UnitPrice
-        });
-      }
-
-      // Construct the view model
-      CartIndexViewModel viewModel = new CartIndexViewModel
-      {
-        ProductLines = productLines,
-        Cart = cart
-      };
-
-      return viewModel;
     }
 
     public ViewResult Index(Cart cart)
@@ -112,19 +79,6 @@ namespace gellmvc.Controllers
         );
         return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
       }
-    }
-
-    // Set some headers on our http response
-    private void cartResponseHeaders(Cart cart, string cartResult, int resultCartQty, decimal resultSubTot, string message)
-    {
-      Response.AddHeader("result", cartResult.ToString());
-      Response.AddHeader("resultCartQty", resultCartQty.ToString());
-      Response.AddHeader("resultSubTot", resultSubTot.ToString());
-      Response.AddHeader("message", message);
-
-      Response.AddHeader("resultGrandTot", cart.GrandTotal().ToString());
-      Response.AddHeader("cartTotalItems", cart.TotalItemsInCart().ToString());
-      Response.AddHeader("cartTotalLines", cart.Lines.Count().ToString());
     }
   }
 }
