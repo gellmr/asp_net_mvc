@@ -5,13 +5,14 @@
 
 @using (Html.BeginForm("SubmitCart", "Cart"))
 {
-  
   <div class="row">
     <div class="col-xs-12">
       <div class="centeredProducts">
+
         <div class="alert alert-warning" id="serverError" style="display:none;">
           There was a server error.
         </div>
+
         <!-- render partials/flash message -->
         <div class="row">
           <div class="col-sm-12 hidden-xs">
@@ -38,29 +39,27 @@
 
         @if (Model.Cart.Lines.Count() == 0)
         {
-
           <span>Page Go Back</span>
           <!-- render "partials/pageGoBack", {goback_message: "Your cart is empty!", goback_btn_text:"Go back to Store", goback_btn_path: store_index_path} -->
         }
         else
         {
-          //cart has items
 
+          //cart has items
           <div class="row content-header-row">
             <div class="col-xs-6">
               <div class="row">
                 <a href="/Store/Index" class="btn btn-default content-header-btn">Back To Store</a>
               </div>
             </div>
+
             <div class="col-xs-6">
               <div class="row">
                 <div class="pull-right">
-
                   @Html.ActionLink("Clear My Cart", "ClearCart", "Cart", new { cart = Model.Cart }, new Dictionary<string, object> {
                     { "id", "clearMyCartBtn" },
                     { "class", (Model.Cart.Lines.Count() > 0) ? "btn btn-default content-header-btn" : "btn btn-default content-header-btn disabled"}
                   })
-
                 </div>
               </div>
             </div>
@@ -68,7 +67,6 @@
 
           foreach (var line in Model.ProductLines)
           {
-            
             @Html.Partial("~/Views/Partials/Shopping/Cart/_CartLine.cshtml", line)
           }
 
@@ -86,11 +84,10 @@
             </div>
           </div>
           }
-          }
 
-        </div>
+        }
+      </div>
     </div>
   </div>
-
 }
-<!-- </form> -->
+@* End of Html form *@
