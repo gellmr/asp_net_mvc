@@ -77,7 +77,7 @@
 
     var parentalDiv = $('div.parentalDiv-' + productId);
     var productRowDiv = parentalDiv.parent();
-    var liBtnRemFromCart = productRowDiv.find("a.remove-from-cart").parent();
+    var btnRemFromCart = $("#remove-from-cart-" + productId);
     var maxStockElement = parentalDiv.find('.maxStockMsg small');
 
     var hideMaxStockElement = function () {
@@ -139,7 +139,7 @@
             case "removed-from-cart":
               hideMaxStockElement();
               parentalDiv.find('.inCartIcon').hide();
-              liBtnRemFromCart.addClass("disabled");
+              btnRemFromCart.css("visibility", "hidden");
               inputElement.val(0);
               if (pageLocation() == "cart") {
                 wellDiv.remove();
@@ -153,10 +153,10 @@
               if (String(newQty) == "0") {
                 minusBtn.addClass("disabled");
                 parentalDiv.find('.inCartIcon').hide();
-                liBtnRemFromCart.addClass("disabled");
+                btnRemFromCart.css("visibility", "hidden");
               } else {
                 minusBtn.removeClass("disabled");
-                liBtnRemFromCart.removeClass("disabled");
+                btnRemFromCart.css("visibility", "visible");
               }
               parentalDiv.find('.subtot-input').val('$ ' + resultSubTot);
               break;

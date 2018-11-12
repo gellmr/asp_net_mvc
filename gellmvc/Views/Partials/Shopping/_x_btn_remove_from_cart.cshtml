@@ -1,27 +1,9 @@
 ﻿@model gellmvc.Domain.Entities.ProductLine
 
 @{
-  var disabled = "";
-  if (Model.QtyInCart <= 0)
-  {
-    disabled = "disabled=disabled";
-  }
+  var vis = (Model.QtyInCart <= 0) ? "hidden" : "visible";
 }
 
-<!-- We are at the CART -->
-
-<button name="remove-from-cart" type="button" class="btn btn-default remove-from-cart" id="remove-from-cart-@Model.Product.Id">
+<button name="remove-from-cart" type="button" class="btn btn-default remove-from-cart" id="remove-from-cart-@Model.Product.Id" style="visibility:@vis;">
   <span class="glyphicon glyphicon-remove"></span>
 </button>
-
-<!-- We are at the STORE -->
-@*<div class="btn-group">
-    <button @disabled class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" type="button">
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu pull-right" role="menu">
-      <li>
-        <a class="remove-from-cart" href="#" id="remove-from-cart-@Model.Product.Id" name="remove-from-cart">Remove from Cart</a>
-      </li>
-    </ul>
-  </div>*@
