@@ -18,7 +18,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    outputStyle: 'compressed'
+                    //outputStyle: 'compressed'
                 },
                 // the file that i want to compile. eg, 'dist/compiled.css' : 'scss/source.scss'
                 files: {

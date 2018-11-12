@@ -1,6 +1,9 @@
 ﻿$icon-font-path: "/Content/fonts/bootstrap/"; // override the bootstrap fonts path.
 @import "bootstrap";
 
+// This file is compiled using Grunt.
+// The resulting .css file is placed in gellmvc/Content/site.css
+
 body {
     padding-top: 50px;
     padding-bottom: 20px;
